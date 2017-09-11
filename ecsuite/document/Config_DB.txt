@@ -1,0 +1,9 @@
+//config_db
+
+module/Ecsuites/config/dev/db.config.php
+//add
+$db_user = 'mysqlito';
+$db_password = '123';
+$db_dbname = 'ecsuite_trainning_cmtien';
+$db_port = '3306';
+$db_host = '172.16.160.171';

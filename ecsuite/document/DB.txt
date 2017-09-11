@@ -1,0 +1,63 @@
+
+//get all
+$albums = $this->getEntity('Album')->findAll();
+
+//find id
+$id = $this->getEntity('Kind')->find($AlbumSession->getKindId());
+
+//find one with condition
+//get album where albumId = ? and deleteFlag = ?
+$album = $this->getEntity('Album')->findOneBy([
+	'albumId' => $albumId, 
+	'deleteFlag' => Album::getConfigValue('deleteFlag', 'DELETE_FLAG_OFF')
+]);
+
+//find all with condition
+$artists = $this->getEntity('Artist')->findBy([
+            'deleteFlag' => 0
+        ]); 
+//check result
+if(!$album){
+	return $this->execAction('error');
+}
+
+//sql
+$DbConnection = $this->getServiceLocator()->get('EntityManager')->getConnection();
+$sql = 'SELECT `m_product_detail_id`, `m_product_header_id`, `first_arrival_date`, `first_arrival_time` FROM `m_product_detail` WHERE `delete_flag` = :delete_flag ORDER BY `m_product_header_id`;';
+$statement_pd = $DbConnection->prepare($sql);
+$statement_pd->bindValue(':delete_flag', ProductHeader::getConfigValue('deleteFlag', 'DELETE_FLAG_OFF'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//transaction
+$this->ServiceManager = Api::get()->getServiceManager();
+$this->EntityManager = $this->ServiceManager->get('EntityManager');
+try {
+    $this->EntityManager->getConnection()->beginTransaction();
+	//do some thing
+	$this->EntityManager->flush();
+    $this->EntityManager->clear();
+    $this->EntityManager->getConnection()->commit();
+} catch (Exception $exe) {
+    $this->EntityManager->getConnection()->rollback();
+    $this->ServiceManager->get('ErrorLogger')->err($exe->getMessage());
+    return false;
+}

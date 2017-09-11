@@ -1,0 +1,15 @@
+<?php
+
+namespace KdlAdminPage\Album\AlbumDelete;
+
+use KdlEntity\Model\BaseModel;
+
+class AlbumDeleteModel extends BaseModel
+{
+    public function delete($Album)
+    {
+        $EntityService = $this->getServiceManager()->get('EntityService');
+        return $EntityService->delete($Album);
+    }
+}
+

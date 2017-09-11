@@ -1,0 +1,23 @@
+<?php
+namespace KdlAdminPage\Album\AlbumEdit;
+
+use KdlEntity\Model\BaseModel;
+use KdlEntity\Entity\Album;
+
+class AlbumEditModel extends BaseModel
+{
+    public function update($Album, $AlbumSession)
+    {
+        if ($AlbumSession instanceof Album) {
+            $EntityService = $this->getServiceManager()->get('EntityService');
+            $Album->setTitle($AlbumSession->getTitle());
+            $Album->setArtist($this->getEntity('Artist')->find($AlbumSession->getArtistId()));
+            $Album->setKind($this->getEntity('Kind')->find($AlbumSession->getKindId()));
+            $Album->setDescription($AlbumSession->getDescription());
+            $Album->setActiveFlag($AlbumSession->getActiveFlag());
+            $Album->setFreeFlag($AlbumSession->getFreeFlag());
+            return $EntityService->update($Album);
+        }
+        return false;
+    }
+}

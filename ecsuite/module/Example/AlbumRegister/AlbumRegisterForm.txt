@@ -1,0 +1,23 @@
+<?php
+
+namespace KdlAdminPage\Album\AlbumRegister;
+
+use KdlFieldset\Fieldset\AlbumFieldset;
+use KdlFieldset\Common\BaseForm;
+
+
+class AlbumRegisterForm extends BaseForm
+{
+    public function __construct($entityManager = null)
+    {
+        parent::__construct();
+        if($entityManager === null) {
+            $entityManager = $this->getServiceManager()->get('EntityManager');
+        }
+        $AlbumFieldset = new AlbumFieldset($entityManager);
+        
+        $AlbumFieldset->initField();
+        $this->add($AlbumFieldset);
+        
+    }
+}

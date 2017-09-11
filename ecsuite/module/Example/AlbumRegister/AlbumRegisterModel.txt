@@ -1,0 +1,29 @@
+//KdlAdminPage\Album\AlbumRegister
+
+<?php
+
+namespace KdlAdminPage\Album\AlbumRegister;
+
+use KdlEntity\Model\BaseModel;
+use KdlEntity\Entity\Album;
+
+
+class AlbumRegisterModel extends BaseModel
+{
+    public function insert($AlbumSession)
+    {
+        if ($AlbumSession instanceof Album) {
+            $EntityService = $this->getServiceManager()->get('EntityService');
+            $Album = $EntityService->getNewEntity('Album');
+            $Album->setTitle($AlbumSession->getTitle());
+            $Album->setArtist($this->getEntity('Artist')->find($AlbumSession->getArtistId()));
+            $Album->setKind($this->getEntity('Kind')->find($AlbumSession->getKindId()));
+            $Album->setDescription($AlbumSession->getDescription());
+            $Album->setActiveFlag($AlbumSession->getActiveFlag());
+            
+            return $EntityService->insert($Album);
+        }
+        return false;
+    }
+}
+

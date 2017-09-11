@@ -1,0 +1,37 @@
+
+Access db
+access table m_admin_resource
+	add a row
+		//id
+		m_admin_resource_id: 24
+		//ten hien thi
+		resource_name: 'Album'
+		//section name
+		section: 'Album'
+		//icon
+		icon: 'glyphicon glyphicon-???'
+		//show priority, muc do hien thi
+		show_priority : 1
+
+Then: logout and login, clear cache
+
+Add Menu con
+	Access table m_admin_resource_permission and add a row
+		m_admin_resource_permission_id : ??
+		//album vừa tạo ở trên
+		m_admin_resource_id : 24
+		//
+		permission_name: 'Tên hiển thị'
+		//controller process
+		controller: 'AlbumList'
+		//có muốn hiển thị hay ko? 1:show - 0: not show
+		menu_flag: 1
+		//thứ tự hiển thị trong Album
+		show_priority: 1
+
+Sau đó truy cập admin để cấp quyền: https://es-thuy.local/admin/top/dashboard
+	Truy cập https://es-thuy.local/admin/administrator/permission_setting
+	管理者管理\ 権限設定
+	sau đó chọn mục 2:システム管理者 (Quản trị hệ thống)
+	Chọn mục Album vừa tạo và click chọn mục cần
+	登録する

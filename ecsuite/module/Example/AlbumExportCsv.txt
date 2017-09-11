@@ -1,0 +1,65 @@
+
+---step 1
+create file KdlCommon\Export\AlbumExport
+//AlbumExport.php
+
+<?php
+namespace KdlCommon\Export;
+
+class AlbumExport extends QueryExport
+{
+
+    protected $allow_column_keys = [
+        'albumId',
+        'artistId',
+        'kindId',
+        'title',
+        'description',
+        'activeFlag',
+        'freeFlag',
+        'deleteFlag'
+    ];
+
+    /**
+     * 出力項目が未指定の場合の、デフォルトの一行データを作成する
+     * @api
+     * @access protected
+     * @param mixed $entity
+     * @return \FuncCallimplode
+     * @example
+     * @since
+     */
+    protected function defaultMakeLineData($entity)
+    {
+        $linedata = [];
+        $linedata[] = $entity->getAlbumId();
+        $linedata[] = $entity->getArtistId();
+        $linedata[] = $entity->getKindId();
+        $linedata[] = $entity->getTitle();
+        $linedata[] = $entity->getDescription();
+        $linedata[] = $entity->getActiveFlag();
+        $linedata[] = $entity->getFreeFlag();
+        $linedata[] = $entity->getDeleteFlag();
+        return implode(',', $linedata);
+    }
+    //make line data
+    protected function makeLineData($entity)
+    {
+        $columns = $this->output_data_columns;
+        $linedata = [];
+        foreach ($columns as $key => $val) {
+            // albumId -> getAlbumId
+            $getter = 'get' . ucfirst($val);
+            if ($val == 'activeFlag' || $val == 'freeFlag' || $val == 'deleteFlag') {
+                $linedata[] = '"' . $entity->{$getter}('LABEL') . '"';
+            } else {
+                $linedata[] = '"' . $entity->{$getter}() . '"';
+            }
+            
+        }
+        return implode(',', $linedata);
+    }
+
+}
+
+--step 2

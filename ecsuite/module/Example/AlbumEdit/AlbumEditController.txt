@@ -1,0 +1,91 @@
+<?php
+namespace KdlAdminPage\Album\AlbumEdit;
+
+use KdlController\AbstractController\AbstractFormController;
+use KdlEntity\Entity\Album;
+
+class AlbumEditController extends AbstractFormController
+{
+    private $albumId = null;
+    private $Album = null;
+    private $form = null;
+
+    protected function init()
+    {
+        $this->setHandlerList([
+            'index' => [
+                'method' => ['get', 'post']
+            ],
+            'confirm' => ['method' => ['post']],
+            'finish' => ['method' => ['post']]
+        ]);
+        $this->albumId = $this->getUrlParam('id');
+        if (!$this->albumId) {
+            return $this->execAction('error');
+        }
+        $this->Album = $this->getEntity('Album')->findOneBy([
+            'albumId' => $this->albumId,
+            'deleteFlag' => Album::getConfigValue('deleteFlag', 'DELETE_FLAG_OFF')
+        ]);
+        if (!$this->Album) {
+            return $this->execAction('error');
+        }
+    }
+
+    public function indexAction()
+    {
+        //????Instance
+        $post = $this->request->getPost()->toArray();
+        $this->form = new AlbumEditForm($this->getEntityManager(), $this->albumId);
+        if ($this->goNext()) {
+            $this->form->get('Album')->bind();
+            $this->form->setData($post);
+            if ($this->form->isValid()) {
+                $Album = $this->form->hydrate('Album');
+                $this->saveEntitySession('Album', $Album);
+                return $this->execNext();
+            } else {
+            }
+        } elseif ($this->isBack()) {
+            $Album = $this->getEntitySession('Album');
+            $this->form->get('Album')->bind($Album);
+        } else {
+            $this->form->get('Album')->bind($this->Album);
+            $this->clearFormSession();
+        }
+        return [
+            'form' => $this->form
+        ];
+    }
+
+    public function confirmAction()
+    {
+        if ($this->goNext()) {
+            return $this->execNext();
+        } elseif ($this->goBack()) {
+            return $this->execBack();
+        }
+        return [
+            'form' => $this->form
+        ];
+    }
+
+    public function finishAction()
+    {
+        $error_flag = false;
+        $AlbumPost = $this->getEntitySession('Album');
+        if (!$AlbumPost) {
+            return $this->execAction('error');
+        }
+        $Model = new AlbumEditModel($this->getServiceManager());
+        $Album = $Model->update($this->Album, $AlbumPost);
+        if ($Album) {
+            $this->getServiceManager()->get('AdminService')->setOperationMessage('EDIT Id=' . $Album->getAlbumId());
+        } else {
+            $error_flag = true;
+        }
+        return [
+            'error_flag' => $error_flag
+        ];
+    }
+}

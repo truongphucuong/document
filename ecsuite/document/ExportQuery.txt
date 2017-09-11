@@ -1,0 +1,12 @@
+
+AlbumExport
+
+
+$export->output([
+	//download
+	'mode' => KdlCommon\Export\Writer\FileWriter::OUTPUT_CONTENT,
+	'output_file' => 'filename'
+	//save file
+	'mode' => KdlCommon\Export\Writer\FileWriter::MAKE_FILE,
+	'output_file' => 'path'
+]);

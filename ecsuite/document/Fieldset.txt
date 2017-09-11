@@ -1,0 +1,32 @@
+
+Fieldset
+
+//with database, select
+ex artistId
+			'artistId' => [
+                'type' => 'DoctrineModule\\Form\\Element\\ObjectSelect',
+                'name' => 'artistId',
+                'options' => [
+                    'label' => 'artistId',
+                    'empty_option' => 'please select',
+                    'object_manager' => $this->getObjectManager(),
+					//entity
+                    'target_class' => 'KdlEntity\\Entity\\Artist',
+                    'property' => 'name',
+                    'is_method' => true,
+                    'find_method' => [
+                        'name' => 'findBy',
+                        'params' => [
+                            'criteria' => [
+								//where condition
+                                'deleteFlag' => 0
+                            ],
+                        ]
+                    ]
+                ],
+                'attributes' => [],
+                'specification' => [
+					//required
+                    'required' => true
+                ]
+            ],

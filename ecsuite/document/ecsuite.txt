@@ -1,0 +1,105 @@
+ecsuite
+
+
+//controller
+//get param id
+$albumId = $this->getUrlParam('id');
+//return error
+return $this->execAction('error');
+//get request
+//with method post -> convert Array
+$post = $this->request->getPost()->toArray();
+//
+$this->error_back_url = $this->url()->fromRoute(null, [
+            'section' => 'top',
+            'page_url' => 'dashboard'
+        ]);
+
+
+
+//view
+//return url in view
+<?= $this->url($this->route, ['page_url' => 'album_register', 'method' => 'index'], [], true); ?>
+<?php echo $this->url($this->route, ['page_url' => 'artist_edit', 'method' => 'index', 'id' => $val->getArtistId()], [], true); ?>
+
+//get config
+$title = $controller['page_info']['title']);
+
+//BaseForm
+--add attribute csrf -> true or false, default true
+protected static $addCsrf = false;
+
+
+/////
+$param['ImportSearch']['perPage'] = $this->getServiceManager()->get('Configuration')['KdlAdminPage']['perPageOptions']['product_import_search'];
+
+
+///
+
+ $param['ImportSearch']['fileType'] = ImportAlbum::getConfigValue('fileType', 'FILE_TYPE_PRODUCT');
+ 
+ 
+
+
+
+//some errors
+--Zend\Form\Exception\InvalidElementException
+	File: vendor/Zend/Form/Fieldset.php:218
+	Message: No element by the name of [title] found in form
+	--> fix: fail name file or extention file Fieldset
+		then, php generate_classmap.php
+	
+-- RuntimeException
+	File: vendor/Doctrine/DoctrineModule/src/DoctrineModule/Form/Element/Proxy.php:335
+	Messgae: No object manager was set
+	Lỗi do attribute fail type element fieldset
+	
+	
+-- Doctrine\ORM\ORMException
+	File: vendor/Doctrine/ORM/ORMException.php:169
+	Message: Entity 'KdlEntity\Entity\Artist' has no field 'one'. You can therefore not call 'findByOne' on the entities' repository
+	Lỗi chỗ findByOne....
+	fix: sai tên hàm change -> findOneBy...
+
+	
+-- admin ajax
+	1 -- このモジュール import_albumがありません。configファイルに追加してください。
+		Loi do chua dk config trong KdlAdminAjax\config\module.config.php
+		Add: 
+		'ajax' => [
+			'pre_template' => $pre_template,
+			'cd' => [
+				'album_list' => [
+					'class' => 'AlbumList',
+					'param' => [
+						'get' => [],
+					],
+				],
+
+			]
+		]
+		--finish
+	
+	2-- 「import_album」アクセス権限がありません。
+		Không có quyền truy cập "import_album"
+		Cần thêm vào bảng admin_resource_permission
+		Do laf call Admin Ajax nên sẽ chọn cái mục API id số 13
+		Add thêm vào là xong
+		Cần cấp quyền cho nó
+			vào: admin/administrator/permission_setting  ( 管理者管理\ 権限設定)
+			Chọn システム管理者 trong Select
+			Chọn Mục API, click vào rồi ok,
+			Logout and login lại
+		
+	3-- Zend\View\Model\ViewModel::setVariables: expects an array, or Traversable argument; received "boolean
+		Lỗi trong chỗ hàm getFindQuery(Parameters $SearchCondition)
+		Do ta có sử dụng class Parameters mà không use nó-> dẫn đến sẽ xảy ra lỗi.
+		Cẩn thận khi copy
+		Fix: use Zend\Stdlib\Parameters;
+		--co the sai: SEARCH_SESSION_KEY chú ý 'KdlAjax' sửa lại 'KdlAdminAjax'
+		
+		
+		
+-- errors:
+	AlbumFieldset --> cho entittyManager call ImportAlbum -> ko call $this->getEntity() ???
+	

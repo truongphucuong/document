@@ -1,0 +1,11 @@
+//Entity
+
+--get value of Flag
+	$delete = Album::getConfigValue('deleteFlag', 'DELETE_FLAG_OFF');
+	
+-- get Label
+	về label thì: ví dụ khi có getDeleteFlag() trả về 0, nhưng muốn lấy label của nó (nằm trong language/jp_JP/entity_Album.php) là On hay Off thì gọi
+	$label = $entity->getDeleteFlag('LABEL');
+	
+-- get Hằng
+	$entity->getDeleteFlag('CONST')

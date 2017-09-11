@@ -1,0 +1,160 @@
+//KdlFieldset/Fieldset/AlbumFieldset
+
+<?php
+namespace KdlFieldset\Fieldset;
+
+use KdlFieldset\Common\AbstractFieldset;
+use Doctrine\ORM\EntityManager;
+use KdlEntity\Entity\Album;
+
+class AlbumFieldset extends AbstractFieldset
+{
+    private $albumId = null;
+    protected $fieldsetName = 'Album';
+
+    public function __construct(EntityManager $entityManager, $albumId = null)
+    {
+
+        parent::__construct($entityManager);
+        $this->albumId = $albumId;
+    }
+    public function getInputFields()
+    {
+        return [
+            'albumId' => [
+                'type' => 'Zend\\Form\\Element\\Text',
+                'name' => 'albumId',
+                'specification' => [
+                    'required' => false
+                ]
+            ],
+            'title' => [
+                'type' => 'Zend\\Form\\Element\\Text',
+                'name' => 'title',
+                'options' => [
+                    'label' => 'title'
+                ],
+                'specification' => [
+                    'required' => true,
+                    'filters' => [
+                        [
+                            'name' => 'Zend\\Filter\\StringTrim'
+                        ]
+                    ],
+                    'validators' => [
+                        'MachineDependent' => [
+                            'name' => 'KdlValidator\\Validator\\MachineDependent'
+                        ],
+                        'StringLength' => [
+                            'name' => 'StringLength',
+                            'options' => [
+                                'encoding' => 'UTF-8',
+                                'max' => 25
+                            ]
+                        ],
+                        'DbRecordExists' => [
+                            'name' => 'KdlValidator\\Validator\\DbRecordExists',
+                            'options' => [
+                                'entityName' => 'Album',
+                                'fieldName' => 'title',
+                                'id' => $this->albumId
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'artistId' => [
+                'type' => 'DoctrineModule\\Form\\Element\\ObjectSelect',
+                'name' => 'artistId',
+                'options' => [
+                    'label' => 'artistId',
+                    'empty_option' => 'please select',
+                    'object_manager' => $this->getObjectManager(),
+                    'target_class' => 'KdlEntity\\Entity\\Artist',
+                    'property' => 'name',
+                    'is_method' => true,
+                    'find_method' => [
+                        'name' => 'findBy',
+                        'params' => [
+                            'criteria' => [
+                                'deleteFlag' => 0
+                            ],
+                        ]
+                    ]
+                ],
+                'attributes' => [],
+                'specification' => [
+                    'required' => true
+                ]
+            ],
+            'kindId' => [
+                'type' => 'DoctrineModule\\Form\\Element\\ObjectSelect',
+                'name' => 'kindId',
+                'options' => [
+                    'label' => 'kindId',
+                    'empty_option' => 'please select',
+                    'object_manager' => $this->getObjectManager(),
+                    'target_class' => 'KdlEntity\\Entity\\Kind',
+                    'property' => 'name',
+                    'is_method' => true,
+                    'find_method' => [
+                        'name' => 'findBy',
+                        'params' => [
+                            'criteria' => [
+                                'deleteFlag' => 0
+                            ],
+                        ]
+                    ]
+                ],
+                'attributes' => [],
+                'specification' => [
+                    'required' => true
+                ]
+            ],
+            'description' => [
+                'type' => 'Zend\\Form\\Element\\Textarea',
+                'name' => 'description',
+                'options' => [
+                    'label' => 'description'
+                ],
+                'attributes' => [
+                    'class' => 'tinymce'
+                ],
+                'specification' => [
+                    'required' => false,
+                    'filters' => [
+                        [
+                            'name' => 'Zend\\Filter\\StringTrim'
+                        ]
+                    ],
+                    'validators' => [
+                        'MachineDependent' => [
+                            'name' => 'KdlValidator\\Validator\\MachineDependent'
+                        ],
+                        'StringLength' => [
+                            'name' => 'StringLength',
+                            'options' => [
+                                'encoding' => 'UTF-8',
+                                'max' => 256
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'activeFlag' => [
+                'type' => 'Zend\\Form\\Element\\Radio',
+                'name' => 'activeFlag',
+                'options' => [
+                    'label' => 'activeFlag',
+                    'label_attributes' => [
+                        'class' => 'radio inline'
+                    ]
+                ],
+                'attributes' => [],
+                'specification' => [
+                    'required' => true
+                ]
+            ]
+        ];
+    }
+}

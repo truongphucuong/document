@@ -1,0 +1,56 @@
+<?php
+
+namespace KdlAdminPage\Album\AlbumDelete;
+
+use KdlController\AbstractController\AbstractFormController;
+
+class AlbumDeleteController extends AbstractFormController
+{
+    private $albumId;
+    private $Album;
+    protected function init()
+    {
+        $this->albumId = $this->getUrlParam('id');
+        if (!$this->albumId) {
+            return $this->execAction('error');
+        }
+        $this->Album = $this->getEntity('Album')->findOneBy([
+            'albumId' => $this->albumId,
+            'deleteFlag' => 0
+        ]);
+        if (!$this->Album) {
+            return $this->execAction('error');
+        }
+        $this->setHandlerList([
+            'index' => [
+                'method' => ['get', 'post']
+            ],
+            'finish' => ['method' => ['post']]
+        ]);
+    }
+    public function indexAction()
+    {
+        $Form = new AlbumDeleteForm();
+        if ($this->goNext()) {
+            $Form->setData($this->request->getPost());
+            if ($Form->isValid()) {
+                return $this->execNext();
+            }
+        }
+        $Form->get('Album')->bind($this->Album);
+        return ['form' => $Form];
+    }
+
+    public function finishAction()
+    {
+        $Model = new AlbumDeleteModel($this->getServiceManager());
+        $Album = $Model->delete($this->Album);
+        $error_flag = false;
+        if ($Album) {
+            $this->getServiceManager()->get('AdminService')->setOperationMessage('DELETE Id=' . $Album->getAlbumId());
+        } else {
+            $error_flag = true;
+        }
+        return ['error_flag' => $error_flag];
+    }
+}

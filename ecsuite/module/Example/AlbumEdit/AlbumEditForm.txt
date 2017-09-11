@@ -1,0 +1,38 @@
+<?php
+namespace KdlAdminPage\Album\AlbumEdit;
+
+use KdlFieldset\Fieldset\AlbumFieldset;
+use KdlFieldset\Common\BaseForm;
+
+class AlbumEditForm extends BaseForm
+{
+    public function __construct($entityManager = null, $albumId = null)
+    {
+        parent::__construct();
+        $AlbumFieldset = new AlbumFieldset($entityManager, $albumId);
+        $modFieldset = [
+            'activeFlag' => [
+                'specification' => ['required' => false],
+            ],
+        ];
+        //modifield
+        $AlbumFieldset->modField($modFieldset);
+        //add field
+        $addFieldset = [
+            'freeFlag' => [
+                'type' => 'Zend\\Form\\Element\\Radio',
+                'name' => 'freeFlag',
+                'options' => [
+                    'label' => 'freeFlag',
+                    'label_attributes' => [
+                        'class' => 'radio inline'
+                    ]
+                ],
+                'specification' => ['required' => true]
+            ],
+        ];
+        $AlbumFieldset->addField($addFieldset);
+        $AlbumFieldset->initField();
+        $this->add($AlbumFieldset);
+    }
+}

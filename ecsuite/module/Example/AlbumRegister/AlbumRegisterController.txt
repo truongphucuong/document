@@ -1,0 +1,76 @@
+<?php
+namespace KdlAdminPage\Album\AlbumRegister;
+
+use KdlController\AbstractController\AbstractFormController;
+
+class AlbumRegisterController extends AbstractFormController
+{
+
+    private $form = null;
+
+    protected function init()
+    {
+        $this->setHandlerList([
+            'index' => [
+                'method' => ['get', 'post']
+            ],
+            'confirm' => [
+                'method' => ['post']
+            ],
+            'finish' => [
+                'method' => ['post']
+            ]
+        ]);
+    }
+
+    public function indexAction()
+    {
+        $post = $this->request->getPost()->toArray();
+        $this->form = new AlbumRegisterForm();
+
+        if ($this->goNext()) {
+            $this->form->get('Album')->bind();
+
+            $this->form->setData($post);
+            
+            if ($this->form->isValid()) {
+                $Album = $this->form->hydrate('Album');
+                $this->saveEntitySession('Album', $Album);
+                return $this->execNext();
+            }
+        } elseif ($this->isBack()) {
+            $Album = $this->getEntitySession('Album');
+            $this->form->get('Album')->bind($Album);
+        } else {
+            $this->clearFormSession();
+        }
+        return ['form' => $this->form];
+    }
+
+    public function confirmAction()
+    {
+        if ($this->goNext()) {
+            return $this->execNext();
+        } elseif ($this->goBack()) {
+            return $this->execBack();
+        }
+        return ['form' => $this->form];
+    }
+
+    public function finishAction()
+    {
+        $error_flag = false;
+        $AlbumPost = $this->getEntitySession('Album');
+        if (!$AlbumPost) {
+            return $this->execAction('error');
+        }
+        $Model = new AlbumRegisterModel($this->getServiceManager());
+        $Album = $Model->insert($AlbumPost);
+        if ($Album) {
+            $this->getServiceManager()->get('AdminService')->setOperationMessage('REGISTER Id=' . $Album->getAlbumId());
+        } else {
+            $error_flag = true;
+        }
+        return ['error_flag' => $error_flag];
+    }
+}
