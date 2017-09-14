@@ -1,0 +1,75 @@
+//
+source: KdlCore/KdlRestful/
+
+//install
+...
+//config ~ route
+config/module.config.php
+
+syntax
+Album -> connect db EntityModel
+
+mỗi khi có nối quan hệ thì
+artistId -> nen coi lai AlbumRegister
+
+//controller
+lien quan den KdlService\AlbumService\AlbumService
+	require: 
+		- create AlbumServiceInterface
+		- create Model folder
+			EntityModel.php
+				require:
+					// searchAlbum, getAlbumByAlbumKey
+					EntitySearchModel.php
+				//edit name
+				getAlbumByAlbumKey($AlbumKey, $option=null)
+					- edit
+						$AlbumKey
+						AlbumEntity
+						$AlbumData
+						self:searchAlbum
+						$Album
+					- ok
+				//edit name
+				searchAlbum($condition, $option = null)
+					call EntitySearchModel
+				makeAlbumKey
+//KdlRestful/Api/AlbumService/Album.php
+		
+	edit:
+		function getList
+			- cho // get data
+			- $AlbumService
+			- clas name AlbumService
+			- $Albums
+			- searchAlbum()
+			
+			
+			
+create new 
+	require KdlService\AlbumService\Validator/AlbumValidator for KdlService/Component/Validator/ValidatorAwareTrait.php
+	AlbumValidator require:
+		- AlbumFieldset
+			+ require:
+				KdlFieldset\Fieldset\AlbumFieldset
+		
+			
+	form data:
+		Album[artistId]=1&Album[kindId]=1&Album[title]=ggg&Album[description]=gggad
+			
+			
+			
+			
+			
+			
+			
+			
+//errors
+- message : Zend\\Mvc\\Controller\\PluginManager::get was unable to fetch or create an instance for getLogger
+-> fix???
+		
+-	Decoding failed: Syntax error
+	-> sai attr form, ....
+	
+- LOCK ERROR table[m_album] data 2017-09-13 != 10:04:10 != 
+	Sai khác time create at and update_at

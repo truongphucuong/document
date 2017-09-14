@@ -1,0 +1,13 @@
+swagger
+
+https://apihandyman.io/writing-openapi-swagger-specification-tutorial-part-3-simplifying-specification-file/
+
+
+/persons/{username}:
+
+		parameters:
+        - name: username
+          in: path
+          required: true
+          description: The person's username
+          type: string

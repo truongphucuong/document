@@ -1,0 +1,32 @@
+json web token for PHP
+source:
+https://github.com/firebase/php-jwt
+
+install
+	$ composer require firebase/php-jwt
+
+using
+	use \Firebas\JWT\JWT;
+	
+	$key = 'sample key';
+	$time = time();
+	$jwt = [
+		'iss' => 1, //oner
+		'aud' => 'http://172.16.160.169:8088',
+		'iat' => $time,
+		'exp' => $time + ((int)$tokenManager['expired'] * 1000)
+	];
+	//encode token
+	// set time live
+	JWT::$leeway = 5; //minute for expired token
+	$jwt = JWT::encode($jwt $this->key);
+
+	//decode
+	try {
+		$decode = JWT::decode($jwt, $this->key, array('HS256'));
+			
+	} catch(\Firebase\JWT\ExpiredException $e) {
+			
+	} catch (\Exception $e){
+           
+        }

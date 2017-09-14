@@ -1,0 +1,9 @@
+
+
+
+//get data module.config.php
+call of controller
+$config = $this->getServiceLocator()->get('Config');
+
+inside module class function ex Module.php
+$config = $e->getApplication()->getServiceManager()->get('Config');

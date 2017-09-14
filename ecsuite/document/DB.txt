@@ -30,6 +30,32 @@ $statement_pd->bindValue(':delete_flag', ProductHeader::getConfigValue('deleteFl
 
 
 
+//Query builder
+
+$EntityManager = $this->getEntityManager();
+$QueryBuilder = $EntityManager->createQueryBuilder();
+
+$QueryBuilder->select('mc.customerId, mc.customerPassword, mc.uniqueId, mc.cardId, '
+            . ' mc.nameSei, mc.nameMei, mc.kanaSei, mc.kanaMei, mc.email, '
+            . ' mc.phone, mc.fax, mc.sexCd, mc.birthDate, mc.mailType, mc.dmFlag, mc.dmDeliverType, mc.telReceiveStatus, mc.telDeliverType, mc.mailmagReceiveStatus, '
+            . ' mc.mailDeliverType, mc.htmlMailReceiveStatus, mc.smsReceiveStatus, mc.smsDeliverType, mc.messageType, mc.totalPoint, mc.deleteFlag, '
+            . ' cc.customerCategoryName, cc.bandColor as customerCategoryBandColor, cc.bandColorName as customerCategoryBandColorName, '
+            . ' mc.customerStatus, '
+            . ' c.companyId, c.companyName, '
+            . ' mc.departmentName, mc.postName, er.invitationFlag, mc.note, '
+            . ' b.brandId, b.brandCode, b.brandName');
+$QueryBuilder->from(CustomerEntity::class, 'mc');
+//join
+$QueryBuilder->leftJoin(CustomerCategoryEntity::class, 'cc', 'WITH', 'mc.customerCategoryId = cc.customerCategoryId');
+$QueryBuilder->leftJoin(CompanyEntity::class, 'c', 'WITH', 'mc.companyId = c.companyId');
+//where
+$QueryBuilder->AndWhere($this->abbr . '.customerStatus IN ( ' . implode(',', $customerStatusList) . ' )');
+//group by
+$QueryBuilder->groupBy('mc.customerId');
+
+
+
+
 
 
 

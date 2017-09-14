@@ -1,4 +1,4 @@
-//Entity
+﻿//Entity
 
 --get value of Flag
 	$delete = Album::getConfigValue('deleteFlag', 'DELETE_FLAG_OFF');
@@ -9,3 +9,14 @@
 	
 -- get Hằng
 	$entity->getDeleteFlag('CONST')
+
+
+create new entity
+	$Model = $this->getModel();
+        $Album = $Model->getNewEntity('Album');
+	//album array to album entity
+	$Album->fromArray($AlbumData);
+
+nếu khỏi tạo như vậy, khi create update delete nó sẽ sinh ra lỗi nếu có khóa ngoại nên cần find các khóa ngoại trước
+
+	EX:$Entity->setArtist($EntityService->getEntity('Artist')->find($Entity->getArtistId()));

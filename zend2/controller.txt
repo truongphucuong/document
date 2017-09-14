@@ -1,0 +1,9 @@
+
+
+Actually, params() controller plugin provides parameters from five different sources:
+
+$this->params()->fromRoute() - Parameters you defined in routing configuration
+$this->params()->fromFiles() - Attached files in request
+$this->params()->fromHeader() - HTTP header parameters.
+$this->params()->fromPost() - POST parameters
+$this->params()->fromQuery() - Query parameters.
