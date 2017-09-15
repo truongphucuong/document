@@ -1,0 +1,20 @@
+
+//XMLHttpRequest -- JSON
+//set header: application/json
+//send data: stringify data
+
+
+var request = new XMLHttpRequest();
+request.open('PUT', './../../album-rest/' + id, true);
+request.setRequestHeader("Content-Type", "application/json");
+request.onload = function() {
+	if (request.status >= 200 && request.status < 400) {
+		console.log(request.responseText);
+	} else {
+		//error
+	}
+};
+request.onerror = function() {
+	console.log('Error');
+};
+request.send(JSON.stringify(data));

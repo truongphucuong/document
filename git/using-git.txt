@@ -1,0 +1,46 @@
+Git command
+
+
+// clone repository
+// create a folder with name is repository name
+	$ git clone URL_REPOSITORY.git
+
+
+// clone repository but not create folder
+	$ git init
+	$ git remote add origin URL_REPOSITORY.git
+	$ git fetch
+	$ git checkout -t origin/master
+	//xong
+
+
+// Adding an existing project to Github using command line
+	- Step 1: Create a new repository from Github,
+		do not initialize the new repository with README, license, or gitrgnore
+		
+	- Step 2: Initialize the local directory as Git repository
+		$ git init
+	- Step 3: Add all files in you new local repository
+		This stages them for the first commit
+		$ git add .
+	- Step 4: Commit the files that you're staged in your local repository
+		$ git commit -m "Name commit"
+	- Step 5: Add git remote repository URL.git
+		// Set the new remote
+		$ git remote add origin URL_REPOSITORY.git
+		// Verifire the new remote URL
+		$ git remote -v
+	- Step 6: Push the change in your local repository to Github
+		4 git push origin master
+
+
+// Update repository local when git change
+	$ git pull origin master
+	
+// Update repository to Github
+	$ git init
+	$ git add .
+	$ git commit -m "update"
+	$ git push -f origin master
+	// then enter account to push Github
+
