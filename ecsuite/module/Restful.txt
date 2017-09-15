@@ -1,0 +1,29 @@
+﻿
+
+
+Mô tả:
+
+- truy cập KdlRestful\Api\AlbumService\Album.php
+	Album.php sẽ mô tả toàn bộ các function của restful
+		- getList() vơi phuong th?c là GET, dùng để get list albums và search chung
+		- get($id) vớii method GET
+		- create($data) nh?n phuong thứcc là PUT
+		- update($albumKey, $albumData) // PUT
+		- delete() //DELETE
+	Album.php sẽ gọi đến KdlService\AlbumService\AlbumService.php
+		AlbumService sẽ kiểm tra data và call qua Model\EntityModel đê xử lý truy vấn
+		và Model\EntitySearchModel dùng cho truy vấn search hoặc get list hoặc getAlbumByAlbumKey
+	
+
+
+AlbumService:
+	-Fieldser: input fieldset
+	-Model
+		+ ColumnMap: xử lý thuộc tính đầu vào và chuyển thành colum: ex: artistId => ar.aritsId
+		+ EntityMode: thực thi sql, save(), update(), create() delete()
+		+ EntitySearchModel: search ...
+		+ ModelInterface dùng cho EntityModel
+	-Validator: Check Data
+	-AlbumService:
+	-AlbumServiceInterface: dùng cho AlbumService
+		

@@ -1,0 +1,83 @@
+
+
+
+- create file service
+-------------------------------------------
+
+//Cpms\RestApi\Service\TokenService.php
+<?php
+
+namespace Cpms\RestApi\Service;
+
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Crypt\Password\Bcrypt;
+use \Firebase\JWT\JWT;
+
+class TokenService
+{
+
+    protected $svLocator;
+
+ 
+    protected $loginService;
+
+    protected $result = ['status' => 'fails', 'token'=> false, 'message' => ''];
+
+    public function __construct(ServiceLocatorInterface $svLocator)
+    {
+        $this->svLocator = $svLocator;
+    }
+
+    /**
+     * Get authentication service
+     * @return \Zend\Authentication\AuthenticationService
+     */
+    private function getLoginService()
+    {
+        if (!$this->loginService) {
+            $this->loginService = $this->svLocator->get('LoginService');
+        }
+        return $this->loginService;
+    }
+    public function createToken($email, $pass)
+    {
+       
+    }
+
+    
+}
+-------------------------------------------
+
+-create service factory : create TokenService
+
+//Cpms\RestApi\Factory\TokenServiceFactory.php
+<?php
+
+namespace Cpms\RestApi\Factory;
+
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Cpms\RestApi\Service\TokenService;
+
+class TokenServiceFactory implements FactoryInterface
+{
+
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        return new TokenService($serviceLocator);
+    }
+}
+
+
+-------------------------------------------
+
+- Register TokenServiceFactory
+///Cpms\RestApi\config\module.config.php
+-------------------------------------------
+ 'service_manager' => array(
+        'factories' => array(
+            'TokenService' => 'Cpms\RestApi\Factory\TokenServiceFactory',
+        ),
+    ),
+
+-------------------------------------------
