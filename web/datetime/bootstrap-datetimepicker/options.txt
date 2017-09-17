@@ -1,0 +1,8 @@
+
+// config view mode
+viewMode: years //years
+
+format: YYYY
+
+show today button
+showTodayButton: true

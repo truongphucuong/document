@@ -1,0 +1,66 @@
+
+
+bootstrap-datetimepicker
+	require: 
+		- jquery
+		- moment
+		- bootstrap 3
+
+Install
+	- jquery
+		$ npm install --save jquery@1.12.0
+	- moment
+		$ npm install --save moment
+	- bootstrap
+		$ npm install --save bootstrap
+	- bootstrap-datetimepicker
+		$npm install --save bootstrap-datetimepicker-npm
+Edit .angular-cli.json
+	"styles": [
+        "styles.css",       "../node_modules/bootstrap/dist/css/bootstrap.min.css",	"../node_modules/bootstrap-datetimepicker-npm/build/css/bootstrap-datetimepicker.min.css"
+    ],
+    "scripts": [
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.min.js",
+        "../node_modules/moment/min/moment.min.js",
+        "../node_modules/bootstrap-datetimepicker-npm/build/js/bootstrap-datetimepicker.min.js"
+      ],
+Using component
+	- import OnInit, ElementRef (know Element Dom), ViewChild
+	- declare jquery:
+		declare var $: any;
+-----
+ex: tracking-view.component.ts
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+
+declare var $: any;
+
+@Component({
+	selector: 'app-tracking-view',
+	templateUrl: './tracking-view.component.html',
+	styleUrls: [
+		'./tracking-view.component.css'
+	]
+})
+export class TrackingViewComponent implements OnInit {
+
+	checkView: boolean = true;
+	el: any;
+	@ViewChild("datetimepicker")
+  	public datetimepicker: ElementRef;
+	constructor() { }
+
+	ngOnInit() {
+		$(this.datetimepicker.nativeElement).datetimepicker({
+			format: 'DD-MM-YYYY',
+			showTodayButton: true
+		});
+	}
+
+	viewTracking(inputDate: string): void {
+
+	}
+
+}
+	
+	

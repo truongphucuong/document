@@ -1,0 +1,8 @@
+
+Install
+required:
+	- bootstrap 3
+	- moment.js
+	- npm:
+		$ npm install --save bootstrap-datetimepicker-npm
+		
