@@ -1,0 +1,7 @@
+
+get staffId login
+
+use Zend\Session\Container;
+
+$user_session =  new Container('StaffID');
+$staffId = $user_session->StaffID;  // staffId login

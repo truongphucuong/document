@@ -7,3 +7,13 @@ $this->params()->fromFiles() - Attached files in request
 $this->params()->fromHeader() - HTTP header parameters.
 $this->params()->fromPost() - POST parameters
 $this->params()->fromQuery() - Query parameters.
+
+
+// call service
+
+// token service
+$tokenService = $this->getServiceLocator()->get('TokenService');
+
+
+// get config of module.config.php of Module
+$config = $this->getServiceLocator()->get('Config'); // return array

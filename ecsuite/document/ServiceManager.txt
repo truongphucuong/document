@@ -1,0 +1,12 @@
+Service Manager
+// getServiceManager()
+$serviceManager = $this->getServiceManager();
+
+//get service from ServiceManager
+$logger = $this->getServiceManager()->get('RestfulApiLogger');
+
+
+
+// getAdminAuth : KdlAminAuth\Service\AdminAuth
+$adminAuth = $this->getServiceManager()->get('AdminAuth');
+
