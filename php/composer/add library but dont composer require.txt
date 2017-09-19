@@ -1,0 +1,7 @@
+
+//
+download library and copy into vendor folder
+find composer.json of library
+find autoload, copy and paste into composer.json of project
+
+and using $ composer dump-autoload
