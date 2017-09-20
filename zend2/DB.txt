@@ -7,3 +7,4 @@ $sql = 'SELECT `VaiTro`
         $statement = $this->tableGateway->getAdapter()->query($sql);
         $result    = $statement->execute();
         return $result->getResource()->fetch(\PDO::FETCH_ASSOC);
+

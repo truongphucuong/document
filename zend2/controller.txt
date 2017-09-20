@@ -21,3 +21,4 @@ $tokenService = $this->getServiceLocator()->get('TokenService');
 
 // get config of module.config.php of Module
 $config = $this->getServiceLocator()->get('Config'); // return array
+

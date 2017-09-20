@@ -1,0 +1,170 @@
+//Example for EventForm
+Default:
+default class for label: $this->label_class_default = 'col-sm-3 control-label';
+default class for input: $this->input_class_default = 'form-control';
+
+//ID hidden
+		$this->add(array(
+            'name' => 'ID_PT',
+            'type' => 'Hidden',
+        ));
+		
+
+--------------------------------------------------------------
+--------------------------------------------------------------
+//TextArea or Input
+		$this->add(array(
+            'name' => 'TenSuKien',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'Tên sự kiện',
+                'label_attributes' => array(
+                    'class' => 'col-sm-3 control-label',
+                ),
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'placeholder' => 'Nhập tên sự kiện'
+            ),
+        ));
+
+// Date ~ dùng như Text, sau đó using BootstrapDatetimepicker để config chọn ngày
+		$this->add(array(
+            'name' => 'BatDauNgay',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'Bắt đầu ngày',
+                'label_attributes' => array(
+                    'class' => $this->label_class_default,
+                ),
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+            ),
+        ));
+--------------------------------------------------------------
+--------------------------------------------------------------
+// Select
+--------------------------------------------------------------
+//Select with data default
+//Select time
+		$this->add(array(
+            'name' => 'BatDauGio',
+            'type' => 'Zend\Form\Element\Select',
+            'options' => array(
+                'label' => 'Giờ',
+                'label_attributes' => array(
+                    'class' => $this->label_class_default,
+                ),
+                'value_options' => array(
+                	'7' => '7:00 AM',
+                	'8' => '8:00 AM',
+                	'9' => '9:00 AM',
+                	'10' => '10:00 AM',
+                	'11' => '11:00 AM',
+                    '13' => '1:00 PM',
+                    '14' => '2:00 PM',
+                    '15' => '3:00 PM',
+                    '16' => '4:00 PM',
+                    '17' => '5:00 PM',
+                ),
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+            ),
+        ));
+
+--------------------------------------------------------------
+//Select with data from DB
+		//ID_LPT
+		$this->add(array(
+            'name' => 'ID_LPT',
+            'type' => 'Zend\Form\Element\Select',
+            'options' => array(
+                'label' => 'Loại phong trào ',
+				'empty_option' => 'Chọn loại phong trào',
+                'value_options' => $this->builtOptionLoaiPhongTrao(),
+                'label_attributes' => array(
+                    'class' => 'col-sm-3 control-label',
+                ),
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+            ),
+        ));
+	- function builtOptionLoaiPhongTrao()
+	public function builtOptionLoaiPhongTrao(){
+        $dbAdapter = $this->adapter;
+        $sql       = 'SELECT `ID_LPT`, `TenPhongTrao`  FROM `danhmuc_pt_loaiphongtrao` ORDER BY `TenPhongTrao` ASC';
+        $statement = $dbAdapter->query($sql);
+        $result    = $statement->execute();
+
+        $selectData = array();
+
+        foreach ($result as $res) {
+			$selecData[] = array(
+				'value' => $res['ID_LPT'],
+                'label' => $res['TenPhongTrao'],
+			);
+        }
+        return $selectData;
+    }
+--------------------------------------------------------------
+--------------------------------------------------------------
+//MultiCheckbox
+		// Nhan vien tham gia
+		$this->add(array(
+            'name' => 'ID_NV',
+            'type' => 'Zend\Form\Element\MultiCheckbox',
+
+            'options' => array(
+                'label' => 'Nhân viên tham gia',
+                'label_attributes' => array(
+                    'class' => 'col-sm-3 control-label',
+                ),
+                'value_options' => $this->builtOptionNhanVienThamGia(),
+            ),
+            'attributes' => array(
+                // 'selected' => true, //all checked
+            ),
+        ));
+	- function builtOptionNhanVienThamGia()
+	public function builtOptionNhanVienThamGia(){
+        $dbAdapter = $this->adapter;
+        $selectData = array();
+
+        $sql       = 'SELECT `ID_NV`, `HoTen`  FROM `danhmuc_nv_nhanvien` where `TinhTrangLamViec` = 1 AND `FlagDel` = 1 ORDER BY `ID_NV` ASC';
+        $statement = $dbAdapter->query($sql);
+        $result    = $statement->execute();
+
+        foreach ($result as $res) {
+            $selectData[] =  array(
+                'value' => $res['ID_NV'],
+                'label' => $res['HoTen'],
+                // 'selected' => true
+            );
+		}
+        return $selectData;
+    }
+--------------------------------------------------------------
+--------------------------------------------------------------
+//Radio
+
+		$this->add(array(
+            'name' => 'info',
+            'type' => 'Zend\Form\Element\Radio',
+            'options' => array(
+                'label' => 'Thông tin',
+                'label_attributes' => array(
+                    'class' => $this->label_class_default,
+                ),
+                'value_options' => array(
+                    '1' => 'Tổng hợp',
+                    '2' => 'Chi tiết',
+                ),
+            ),
+            'attributes' => array(
+                'value' => 1,
+                'class' => 'info',
+            ),
+        ));
