@@ -8,6 +8,7 @@ use Zend\Mvc\MvcEvent;
 	$e->getApplication()->getRequest()->getQuery();
 
 
+
 //get service
 	$e->getApplication()->getServiceManager()->get('TokenService')
 
