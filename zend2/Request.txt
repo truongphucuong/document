@@ -1,0 +1,25 @@
+//HttpRequest
+
+//create request
+- Module.php: using MvcEvent $e
+	$request = $e->getApplication()->getRequest();
+
+- controller, restfulController
+	$request = $this->getRequest();
+
+
+//method:
+
+- isPost(): //check is Post method return true, else false
+
+// get query: ex: /url?accessToken=abc
+$query = $request->getQuery(); // array
+$accessToken = $query['accessToken'];
+
+//getBaseUrl()
+//http://172.16.160.169:8088/cpmsAdmin/public/loginapi
+$baseUrl = $request->getBaseUrl(); //  /cpmsAdmin/public
+
+//getBaseUrl // return full url
+$baseUri = $request->getBaseUri(); //  /cpmsAdmin/public/loginapi
+

@@ -9,6 +9,10 @@ $this->params()->fromPost() - POST parameters
 $this->params()->fromQuery() - Query parameters.
 
 
+$this->getRequest()->isPost()
+
+
+
 // call service
 
 // token service
@@ -17,3 +21,4 @@ $tokenService = $this->getServiceLocator()->get('TokenService');
 
 // get config of module.config.php of Module
 $config = $this->getServiceLocator()->get('Config'); // return array
+

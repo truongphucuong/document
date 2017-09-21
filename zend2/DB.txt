@@ -1,0 +1,10 @@
+
+//StaffTable
+
+$sql = 'SELECT `VaiTro`   
+            FROM `danhmuc_nv_nhanvien` 
+            WHERE `ID_NV` = ' . (int)$ID_NV;
+        $statement = $this->tableGateway->getAdapter()->query($sql);
+        $result    = $statement->execute();
+        return $result->getResource()->fetch(\PDO::FETCH_ASSOC);
+

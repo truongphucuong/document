@@ -1,10 +1,46 @@
 MvcEvent
 
+use Zend\Mvc\MvcEvent;
+
+
 //get query params
 
 	$e->getApplication()->getRequest()->getQuery();
 
 
+
 //get service
 	$e->getApplication()->getServiceManager()->get('TokenService')
+
+
+
+
+// return response JSON
+//create function onBootstrap
+    public function onBootstrap(MvcEvent $e)
+    {
+        // attach the JSON view strategy
+        $app      = $e->getTarget();
+        $locator  = $app->getServiceManager();
+        $view     = $locator->get('ZendViewView');
+        $strategy = $locator->get('ViewJsonStrategy');
+        $view->getEventManager()->attach($strategy, 100);
+
+        $events = $e->getTarget()->getEventManager();
+        $events->attach(MvcEvent::EVENT_ROUTE, array($this, 'checkToken'));
+
+    }
+//function checkToken
+public function checkToken(MvcEvent $e)
+    {
+		$result = array('status' => false, 'message' => 'dadad');
+		$response = $e->getResponse();
+                $response->setStatusCode(403);
+                $response->setContent(json_encode($result));
+                $e->stopPropagation(true);
+
+                return $response;
+    }
+
+
 

@@ -1,0 +1,219 @@
+﻿
+
+
+//Integer
+//ID integer
+	$inputFilter->add(array(
+              'name'     => 'ID_PT',
+              'required' => false,
+              'filters'  => array(
+                  array('name' => 'Int'),
+              ),
+          ));
+
+//ID_LPT of Selecte: value -> integer
+          $inputFilter->add(array(
+              'name'     => 'ID_LPT',
+              'required' => true,
+              'error_message' => 'Chưa chọn loại phong trào',
+              'filters'  => array(
+                  array('name' => 'Int'),
+              ),
+              'validators' => array(
+                  array(
+                    'name' =>'NotEmpty', 
+                      'options' => array(
+                          'messages' => array(
+                              \Zend\Validator\NotEmpty::IS_EMPTY => 'Chưa chọn loại phong trào' 
+                          ),
+                      ),
+                  ),
+              ),
+          ));
+
+
+
+--------------------------------------------------------------
+--------------------------------------------------------------
+//Text
+//Default ~ bt
+	// TenSuKien
+          $inputFilter->add(array(
+              'name'     => 'TenSuKien',
+              'required' => true,
+              'validators' => array(
+                  array(
+                    'name' =>'NotEmpty', 
+                      'options' => array(
+                          'messages' => array(
+                              \Zend\Validator\NotEmpty::IS_EMPTY => 'Chua nhâ?p tên su? kiê?n',
+                          ),
+                      ),
+
+                  ),
+                  array(
+                      'name' => 'StringLength',
+                      'options' => array(
+                          'max' => 255,
+                          'messages' => array(
+                              \Zend\Validator\StringLength::TOO_LONG => 'Tên su? kiê?n pha?i < 255 ky´ tu?',
+                          ),                            
+                      ),
+                  ),
+              ),
+          ));
+
+
+--------------------------------------------------------------
+//Password
+	$inputFilter->add(array(
+                'name' => 'login_password',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Vui lòng nh?p M?t kh?u'
+                            ),
+                        ),
+                    ),
+                ),
+            ));
+
+--------------------------------------------------------------
+//Email
+	$inputFilter->add(array(
+                'name' => 'login_name',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name' 		=> 'NotEmpty',
+                        'break_chain_on_failure' => true,
+                        'options' 	=> array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => 'Vui lòng nh?p Email'
+                            ),
+                        ),
+                    ),
+                    array (
+                	'name' => 'Regex',
+                	'options' => array(
+                            'pattern'=>'/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/',
+                            'messages' => array(
+                		\Zend\Validator\Regex::NOT_MATCH    => 'Email không h?p l?.',
+                            ),
+                	),
+                	'break_chain_on_failure' => true,
+                    ),
+                ),
+            ));
+
+--------------------------------------------------------------
+---------------------------------------------------------------
+//Date
+//Ngày tháng năm
+// NgayThangNam
+          $inputFilter->add(array(
+              'name'     => 'NgayThangNam',
+              'required' => true,
+              'validators' => array(
+                array(
+                  'name' =>'NotEmpty', 
+                  'options' => array(
+                    'messages' => array(
+                      \Zend\Validator\NotEmpty::IS_EMPTY => 'Chưa nhập ngày tổ chức',
+                    ),
+                  ),
+                  'break_chain_on_failure' => true,
+                ),
+                array(
+                  'name' =>'Date',
+                  
+                  'options' => array(
+                    'messages' => array(
+                      \Zend\Validator\Date::INVALID => 'Ngày tổ chức chưa đúng',
+                      \Zend\Validator\Date::FALSEFORMAT => 'Sai kiểu',
+                      \Zend\Validator\Date::INVALID_DATE => 'Chưa đúng định dạng',
+                    ),
+                    'format' => 'd-m-Y', // format date
+                  ),
+                  'break_chain_on_failure' => true,
+                ),
+              ),
+          ));
+// Check Ngày giờ bắt đầu phải nhỏ hơn ngày giờ kết thúc, using callback
+
+	//KetThucGio
+          $inputFilter->add(array(
+            'name'     => 'KetThucGio',
+            'required' => true,
+            'filters'  => array(
+              array('name' => 'Int'),
+            ),
+            'validators' => array(
+              array(
+                'name' =>'NotEmpty', 
+                'options' => array(
+                  'messages' => array(
+                    \Zend\Validator\NotEmpty::IS_EMPTY => 'Chưa nhập Kết thúc giờ',
+                  ),
+                ),
+                'break_chain_on_failure' => true,
+              ),
+            ),
+          ));
+	// KetThucNgay
+          $inputFilter->add(array(
+            'name'     => 'KetThucNgay',
+            'required' => true,
+            'validators' => array(
+              array(
+                'name' =>'NotEmpty', 
+                'options' => array(
+                  'messages' => array(
+                    \Zend\Validator\NotEmpty::IS_EMPTY => 'Chưa nhập Kết thúc ngày',
+                  ),
+                ),
+                'break_chain_on_failure' => true,
+              ),
+              array(
+                'name' =>'Date',
+                'options' => array(
+                  'messages' => array(
+                    \Zend\Validator\Date::INVALID => 'Kết thúc ngày chưa đúng',
+                    \Zend\Validator\Date::FALSEFORMAT => 'Sai kiểu',
+                    \Zend\Validator\Date::INVALID_DATE => 'Chưa đúng định dạng',
+                  ),
+                  'format' => 'd-m-Y',
+                ),
+                'break_chain_on_failure' => true,
+              ),
+              array(
+                'name' => 'Callback',
+                'options' => array(
+                  'messages' => array(
+                    \Zend\Validator\Callback::INVALID_VALUE => 'Ngày giờ Kết thúc phải lớn hơn Bắt đầu',
+                  ),
+                  'callback' => function ($value, $context = array()){
+                    //
+                    $bat_dau = \DateTime::createFromFormat('d-m-Y', $context['BatDauNgay']);
+                    $bat_dau->setTime($context['BatDauGio'], 0, 0);
+                    $ket_thuc = \DateTime::createFromFormat('d-m-Y', $value);
+                    $ket_thuc->setTime($context['KetThucGio'], 0, 0);
+                    return $bat_dau < $ket_thuc;
+                  }
+                ),
+                'break_chain_on_failure' => true,
+              ),
+            ),
+          ));

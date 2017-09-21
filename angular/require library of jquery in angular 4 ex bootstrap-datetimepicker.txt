@@ -6,6 +6,7 @@ bootstrap-datetimepicker
 		- moment
 		- bootstrap 3
 
+
 Install
 	- jquery
 		$ npm install --save jquery@1.12.0
