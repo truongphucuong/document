@@ -1,0 +1,44 @@
+
+
+//InArray
+The input was not found in the haystack 
+// turn off
+   $this->add( array(
+        'name'     => 'progressStatus',
+        'type'     => 'DoctrineModule\Form\Element\ObjectSelect',
+        'options' => array(
+            'disable_inarray_validator' => true,
+        ),
+
+    )); 
+
+$this->addElement('select', $name, array(
+            'required' => true,
+            'label' => 'Choose sth:',
+            'filters' => array('StringTrim', 'StripTags'),
+            'multiOptions' => $nestedArrayOptions,
+            'validators' => array(
+                array(
+                    'InArray', true, array(
+                        'haystack' => $flatArrayOptionsKeys,
+                        'messages' => array(
+                            Zend_Validate_InArray::NOT_IN_ARRAY => "Value not found"
+                        )
+                    )
+                )
+            )
+        ));
+
+
+//
+Cannot use 'Int' as class name as it is reserved
+Loi xay ra dv PHP 7
+\String
+\Int
+\Bool
+\Float
+->change 
+\Field(type="string")
+\Field(type="int")
+\Field(type="bool")
+\Field(type="float")

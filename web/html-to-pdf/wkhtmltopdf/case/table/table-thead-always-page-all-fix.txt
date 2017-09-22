@@ -1,0 +1,5 @@
+
+repeating header disabled
+add css
+
+thead, tfoot { display: table-row-group }

@@ -1,0 +1,1 @@
+tr { page-break-inside: avoid }
