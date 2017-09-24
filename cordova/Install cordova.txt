@@ -1,0 +1,47 @@
+Install cordova
+
+// install cordova-cli
+$npm install -g cordova
+
+// create app
+syntax: $ cordova create [folder-name] [package] [application-name]
+$ cordova create hello com.example.hello Helloworld
+
+// add platforms
+$ cd hello
+// Add the platforms that you want to target your app. We will add the 'ios' and 'android' platform and ensure they get saved to config.xml and package.json:
+// add ios
+$ cordova platform add ios
+// ios platform requirements
+	- https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html#requirements-and-support
+	- requirements:
+		+ Apple OS X: not installed
+		+ Cordova tooling for iOS requires App OS X
+		+
+
+// add android
+$ cordova platform add android
+// android platform requirements:
+	- https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html#requirements-and-support
+	- requirements:
+		+ Java JDK
+		+ Android SDK: (Android target: installed android-19,android-21,android-22,android-23,Google Inc.:Google APIs:19,Google Inc.:Google APIs (x86 System Image):19,Google Inc.:Google APIs:23)
+		+ Gradle: installed
+
+// add browser
+$ cordova platform add browser
+
+
+// list platforms is added
+$ cordova platform ls
+
+
+// Build cordova
+// run build the project for all platforms:
+$ cordova build
+// run emulator android
+$ cordova build android
+// test the app
+$ cordova emulator android
+
+

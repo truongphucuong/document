@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Simple Weather js</title>
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	
+	<script src="https://momentjs.com/downloads/moment.js"></script>
+	<!-- <script src="https://momentjs.com/downloads/moment-timezone.js"></script> -->
+	<script src="http://momentjs.com/downloads/moment-timezone-with-data.js"></script>
+	<style>
+		.btn{
+			display: inline-block;
+		    padding: 6px 12px;
+		    margin-bottom: 0;
+		    font-size: 14px;
+		    font-weight: 400;
+		    line-height: 1.42857143;
+		    text-align: center;
+		    white-space: nowrap;
+		    vertical-align: middle;
+		    cursor: pointer;
+		    -webkit-user-select: none;
+		    -moz-user-select: none;
+		    -ms-user-select: none;
+		    user-select: none;
+		    background-image: none;
+		    border: 1px solid transparent;
+		    border-radius: 4px;
+		    margin: 3px;
+		}
+		.btn-default {
+		    color: #333;
+		    background-color: #fff;
+		    border-color: #ccc;
+		}
+		.btn-success {
+		    color: #fff;
+		    background-color: #5cb85c;
+		    border-color: #4cae4c;
+		}
+		.btn-warning {
+		    color: #fff;
+		    background-color: #f0ad4e;
+		    border-color: #eea236;
+		}
+		.weather-error{
+			color: red;
+		}
+		#weather-table table{
+			max-height: 235px;
+			min-height: 235px;
+    		overflow-y: auto;
+		}
+		.weather-table-1,
+		.weather-table-2,
+		.weather-table-3,
+		.weather-table-4,
+		.weather-table-5{
+			display: none;
+		}
+		.weather-table-selected{
+			display: block;
+		}
+		.weather_date{
+		    margin-top: 5px;
+    		margin-bottom: 5px;
+		}
+		.weather-loading, .weather-error{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div id="weather">
+		<div>
+			<select class="weather-select-id">
+				<option value="1581188">Cần Thơ</option>
+				<option value="1562414">Vũng Tàu</option>
+				<option value="1566083">Hồ Chí Minh</option>
+				<option value="1579008">Kiên Giang</option>
+			</select>
+		</div>
+		<div id="weather-table">
+			<p class="weather-loading">Loading...</p>
+			<p class="weather-error">Có lỗi xảy ra</p>
+			<table class="weather-table-1 weather-table-selected">
+				<!-- <caption>ABC</caption> -->
+				<thead>
+					<tr>
+						<th>Giờ</th>
+						<th>Thời tiết</th>
+						<th>°C</th>
+					</tr>
+				</thead>
+				<tbody >
+				</tbody>
+			</table>
+			<table class="weather-table-2">
+				<!-- <caption>ABC</caption> -->
+				<thead>
+					<tr>
+						<th>Giờ</th>
+						<th>Thời tiết</th>
+						<th>°C</th>
+					</tr>
+				</thead>
+				<tbody >
+				</tbody>
+			</table>
+			<table class="weather-table-3">
+				<!-- <caption>ABC</caption> -->
+				<thead>
+					<tr>
+						<th>Giờ</th>
+						<th>Thời tiết</th>
+						<th>°C</th>
+					</tr>
+				</thead>
+				<tbody >
+				</tbody>
+			</table>
+			<table class="weather-table-4">
+				<!-- <caption>ABC</caption> -->
+				<thead>
+					<tr>
+						<th>Giờ</th>
+						<th>Thời tiết</th>
+						<th>°C</th>
+					</tr>
+				</thead>
+				<tbody >
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="weather_date">
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			//autoload weather
+			getWeather(1581188);
+			$('.weather-select-id').change(function() {
+				resetWeather();
+				getWeather($(this).val());
+			});
+			function getWeather($id){
+				//start loading
+				$('.weather-loading').show();
+				$appid = '131ca14ee7e599fb5bc1b4f8410fcaaf';
+				$api = 'http://api.openweathermap.org/data/2.5/forecast?';
+				$id = $id;
+				$.ajax({
+					url: $api+ 'id='+$id+'&appid='+$appid+'&lang=vi&units=metric',
+					type: 'GET',
+					dataType: 'json',
+					data: {},
+				})
+				.done(function(result) {
+					//hide loading
+					$('.weather-loading').hide();
+					if(result['cod'] == '200'){
+						$weather_image = 'http://openweathermap.org/img/w/';
+						// $date = new Date(result['list'][0]['dt_txt']);
+						$date = moment.utc(result['list'][0]['dt_txt']).local();
+						
+						// console.log($date.format());
+						$('.weather_date').append('<button type="button" class="btn btn-warning weather-date" data-content="1">'+$date.date()+'-'+$date.month()+'</button>');
+						$table_content_id = 1;
+						$dk_first = true;
+						for (var i = 0; i < result['list'].length; i++) {
+							
+							// $date_new = new Date(result['list'][i]['dt_txt']);
+							// $date_new = moment.tz(result['list'][i]['dt_txt'], $time_zone);
+							$date_new = moment.utc(result['list'][i]['dt_txt']).local();
+							// console.log('old---'+$date.format());
+							// console.log('new---'+$date_new.format());
+							if($date.date() != $date_new.date()){
+								$table_content_id++;
+								//get 4date
+								if($table_content_id == 5){ return false;}
+								$('.weather_date').append('<button type="button" class="btn btn-success weather-date" data-content="'+$table_content_id+'">'+$date_new.date()+'-'+$date_new.month()+'</button>');
+								$date = $date_new;
+							}
+							$add = '<tr>'+
+							'<td>'+$date_new.hours()+'h</td>'+
+							'<td><img src="'+$weather_image+result['list'][i]['weather'][0]['icon']+'.png" alt=""></td>'+
+							'<td>'+result['list'][i]['main']['temp']+'°C</td>'+
+						'</tr>';
+							$('.weather-table-'+$table_content_id+' tbody').append($add);
+						}
+						
+						// console.log(result);
+					}else{
+						//show errorr
+						$('.weather-error').show();
+					}
+					
+				})
+				.fail(function() {
+					$('.weather-loading').hide();
+					//show errorr
+					$('.weather-error').show();
+					console.log("error");
+				});	
+			}
+			function resetWeather(){
+				$('#weather-table tbody').each(function() {
+					$(this).html('');
+				});
+				//reset selected
+				//hide selected
+				$('table.weather-table-selected').removeClass('weather-table-selected');
+				//add selected -1
+				$('.weather-table-1').addClass('weather-table-selected');
+				//reset date
+				$('.weather_date').html('');
+			}
+
+			$('body').on('click', '.weather_date button', function() {
+				//hide selected
+				$('table.weather-table-selected').removeClass('weather-table-selected');
+				//add selected
+				$('.weather-table-'+$(this).attr('data-content')).addClass('weather-table-selected');
+				//reset date
+				$('.weather_date button.btn-warning').removeClass('btn-warning').addClass('btn-success');
+				$(this).removeClass('btn-success').addClass('btn-warning');
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+Cordova command
+
+// add plugin
+Syntax: $ cordova plugin add [plugin-name]
+$ cordova plugin add cordova-plugin-camera
+
+// update cordova and project
+$ npm update -g cordova
+
+// show version
+$ cordova -v
+
+// update platform
+$ cordova platform update android --save
+$ cordova platform update ios --save

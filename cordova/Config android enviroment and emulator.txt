@@ -1,0 +1,11 @@
+Config Android environment
+window:
+	- add PATH
+	C:\Users\PHONGTHUY\AppData\Local\Android\sdk\tools;C:\Users\PHONGTHUY\AppData\Local\Android\sdk\platform-tools;
+	- create new environment variable
+		JAVA_HOME: C:\Program Files\Java\jdk1.8.0_25
+		ANDROID_HOME: C:\Users\PHONGTHUY\AppData\Local\Android\sdk
+	- xong
+	// run emulator
+	$ cordova run --emulator
+	
