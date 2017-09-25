@@ -11,8 +11,13 @@ Mô tả:
 		- update($albumKey, $albumData) // PUT
 		- delete() //DELETE
 	Album.php sẽ gọi đến KdlService\AlbumService\AlbumService.php
-		AlbumService sẽ kiểm tra data và call qua Model\EntityModel đê xử lý truy vấn
+		- AlbumService sẽ kiểm tra data và call qua Model\EntityModel đê xử lý truy vấn
 		và Model\EntitySearchModel dùng cho truy vấn search hoặc get list hoặc getAlbumByAlbumKey
+		- Album: 
+			+ logger (\KdlRestful\Controller\RestfulApiLoggerController)
+				> call to ServiceManager RestfulApiLogger
+				> KdlLogger\Writer\RestfulApiLoggerStream
+			+ check Authentication: \KdlRestful\Controller\AuthenticationTrait
 	
 
 

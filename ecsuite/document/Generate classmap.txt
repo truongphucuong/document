@@ -1,0 +1,9 @@
+Using generate classmap when add 1 file new in Module/Ecsuite
+using putty to play command server
+// modify dir namespace in autoload_classmap.php
+
+$ php bin/deploy/generate_classmap.php
+
+
+
+if play command in client, after played, select Module/Ecsuite/autoload_classmap.php

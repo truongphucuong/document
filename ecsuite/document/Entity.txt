@@ -2,6 +2,8 @@
 
 --get value of Flag
 	$delete = Album::getConfigValue('deleteFlag', 'DELETE_FLAG_OFF');
+
+	$param['ImportSearch']['fileType'] = ImportAlbum::getConfigValue('fileType', 'FILE_TYPE_PRODUCT');
 	
 -- get Label
 	về label thì: ví dụ khi có getDeleteFlag() trả về 0, nhưng muốn lấy label của nó (nằm trong language/jp_JP/entity_Album.php) là On hay Off thì gọi
@@ -10,12 +12,17 @@
 -- get Hằng
 	$entity->getDeleteFlag('CONST')
 
+--  to Array
+	$arr = $entity->toArray();
+
 
 create new entity
 	$Model = $this->getModel();
         $Album = $Model->getNewEntity('Album');
-	//album array to album entity
+
+	// create data album entity from  album data array
 	$Album->fromArray($AlbumData);
+
 
 nếu khỏi tạo như vậy, khi create update delete nó sẽ sinh ra lỗi nếu có khóa ngoại nên cần find các khóa ngoại trước
 

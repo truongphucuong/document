@@ -1,0 +1,13 @@
+
+
+chosen
+create chosen
+$('#test').chosen({});
+
+
+//set disable
+error: if id_nv.attr('disabled', true); //nó sẽ không bị ảnh hưởng
+fix: id_nv.prop('disabled', true).trigger("chosen:updated");
+
+remove disabled
+	id_nv.prop('disabled', false).trigger("chosen:updated");

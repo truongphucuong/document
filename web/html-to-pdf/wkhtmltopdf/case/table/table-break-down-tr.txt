@@ -1,19 +1,18 @@
-
+﻿
 lỗi là do:
 	- để nó tự động xuống dòng
-		p { page-break-inside: avoid }
-	- css font-size, line-height không đồng nhất
+		p { page-break-inside: avoid; }
+	- ko cos sự đồng nhất dpi... platform
+	- overflow: là hidden => sửa thành visible
 có nhiều cách để fix
 - cho nguyên đoạn đó xuống dòng luôn:
 	p {
 		page-break-before: always; // cho p xuống dòng
 	}
-- css lại font-size và line-height và dùng p { page-break-inside: avoid }
-	body {
-                width: 100%;
-                font-family: "Arial";
-                font-size: 14px; 
-                line-height: 1.428571429;
-                color: #333;
-                background-color: #fff;
-            }
+
+
+-- using --zoom 0.9: nhưng nó có 1 vấn đề là phần căn lề bên phải sẽ trống, lớn hơn
+td{
+	page-break-inside: avoid;
+}
+	$ wkhtmltopdf --zoom 0.9 case.htm case.pdf

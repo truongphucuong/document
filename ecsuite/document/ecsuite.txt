@@ -1,19 +1,4 @@
-ecsuite
-
-
-//controller
-//get param id
-$albumId = $this->getUrlParam('id');
-//return error
-return $this->execAction('error');
-//get request
-//with method post -> convert Array
-$post = $this->request->getPost()->toArray();
-//
-$this->error_back_url = $this->url()->fromRoute(null, [
-            'section' => 'top',
-            'page_url' => 'dashboard'
-        ]);
+﻿ecsuite
 
 
 
@@ -21,25 +6,6 @@ $this->error_back_url = $this->url()->fromRoute(null, [
 //return url in view
 <?= $this->url($this->route, ['page_url' => 'album_register', 'method' => 'index'], [], true); ?>
 <?php echo $this->url($this->route, ['page_url' => 'artist_edit', 'method' => 'index', 'id' => $val->getArtistId()], [], true); ?>
-
-//get config
-$title = $controller['page_info']['title']);
-
-//BaseForm
---add attribute csrf -> true or false, default true
-protected static $addCsrf = false;
-
-
-/////
-$param['ImportSearch']['perPage'] = $this->getServiceManager()->get('Configuration')['KdlAdminPage']['perPageOptions']['product_import_search'];
-
-
-///
-
- $param['ImportSearch']['fileType'] = ImportAlbum::getConfigValue('fileType', 'FILE_TYPE_PRODUCT');
- 
- 
-
 
 
 //some errors

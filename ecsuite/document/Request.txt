@@ -1,0 +1,20 @@
+Request
+// from controller
+
+// check isPost
+	if ($this->request->isPost()) {
+		//...
+	}
+
+// get Post data
+	// get post
+	$data = $this->request->getPost();
+	// get post and convert to array
+	$dataArray = $this->request->getPost()->toArray();
+	
+// add data to request post
+	$editUrl = $this->url()->fromRoute(null, [
+		'page_url' => 'artist_edit',
+		'method' => 'index;
+	]);
+	$this->request->getPost()->set('editUrl', $editUrl);

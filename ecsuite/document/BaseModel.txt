@@ -1,0 +1,33 @@
+BaseModel
+KdlEntity\Model\BaseModel
+
+// get entity service
+	$entityService = $this->getServiceManager()->get('EntityService');
+	
+// create new Artist Entity empty
+	$artist = $entityService->getNewEntity('Artist');
+	// $artist ~ Artist Entity
+	$artist->setName('aaa');
+// instanceof $artist ~ Artist Entity
+	if ($artist instanceof Artist) {
+		//...
+	}
+
+// note:
+	- table foreign -> remember call foreign
+		$album->setArtist($this->getEntity(Artist')->find($alnum->getArtistId()));
+	// ...
+	
+
+
+-------------------------------------------------------
+
+// insert
+	// Artist Entity: $artist
+	return $entityService->insert($artist);
+	
+// edit
+	return $entityService->update($artist);
+
+// delete
+	return $entityService->delete($artist);

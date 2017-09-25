@@ -1,0 +1,67 @@
+
+
+//Text
+'productName' => [
+                'type' => 'Zend\\Form\\Element\\Text',
+                'name' => 'productName',
+                'attributes' => [
+                    'id' => 'productHeaderSuggest',
+                    'class' => 'input-xxlarge'
+                ],
+                'specification' => [
+                    'required' => false,
+                    'filters' => [
+                        [
+                            'name' => 'Zend\\Filter\\StringTrim'
+                        ]
+                    ]
+                ]
+            ],
+
+			
+
+			
+Select one from database
+'brandId' => [
+                'type' => 'DoctrineModule\\Form\\Element\\ObjectSelect',
+                'name' => 'brandId',
+                'options' => [
+                    'label' => 'brandId',
+                    'empty_option' => 'please select',
+                    'object_manager' => $this->getObjectManager(),
+                    'target_class' => 'KdlEntity\\Entity\\Brand',
+                    'property' => 'brandName',
+                    'is_method' => true,
+                    'find_method' => [
+                        'name' => 'findBy',
+                        'params' => [
+                            'criteria' => []
+                        ]
+                    ]
+                ],
+                'attributes' => [
+                    'data-rel' => 'chosen'
+                ],
+                'specification' => [
+                    'required' => false
+                ]
+            ],
+
+			
+			
+// Radio
+'saleFlag' => [
+                'type' => 'Zend\\Form\\Element\\Radio',
+                'name' => 'saleFlag',
+                'options' => [
+                    'label' => 'saleFlag',
+                    'label_attributes' => [
+                        'class' => 'radio inline'
+                    ]
+                ],
+                'attributes' => [],
+                'specification' => [
+                    'required' => false
+                ]
+            ],
+

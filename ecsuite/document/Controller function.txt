@@ -1,0 +1,88 @@
+Controller
+// Request
+// get request
+	$request = $this->request->getPost();
+
+// add url var
+	$editUrl = $this->url()->fromRoute(null, [
+		'page_url' => 'album_edit',
+		'method' => 'index'
+	]);
+	$this->request->getPost()->set('edit_url', $editUrl);
+// get param id
+	$artistId = $this->getUrlParam('id');
+// get config AdminPage
+	$param['ImportSearch']['perPage'] = $this->getServiceManager()->get('Configuration')['KdlAdminPage']['perPageOptions']['product_import_search'];
+
+// Get Entity
+	$en = $this->getEntity();
+
+// Get Service Manager
+	$serviceManager = $this->getServiceManager();
+	ex: $model = new ArtistRegisterModel($this->getServiceManager());
+	// get a service
+	$adminService = $this->getServiceManager()->get('AdminService');
+
+// get page info from config.php attribute "page_info"
+	$pageInfo = $this->getPageInfo();
+	$editUrl = $pageInfo['edit'];
+
+
+
+
+
+// handel next, pri action for registerAction...
+	// init() function
+	// set handel list
+	$this->setHandlerList([
+		'index' => [
+			'method' => ['get', 'post']
+		],
+		'confirm' [
+			'method' => 'post'
+		],
+		'finish' => [
+			'method' => 'post'
+		]
+	]);
+	// indexAction
+		when check $this->goNext() and isValid() form success
+			//save Artist into entity session
+			$artist =  $this->form->hydrate('Artist');
+			$this->saveEntitySession('Artist', $artist);
+			// exec next
+			return $this->execNext();
+		else $this->goBack()
+			// clear form session
+			$this->clearFormSession();
+	//cofirmAction
+		if ($this->goNext()) {
+            return $this->execNext();
+        } elseif ($this->goBack()) {
+            return $this->execBack();
+        }
+        return ['form' => $this->form];
+	// finishAction
+		// get entity session
+		$artist = $this->getEntitySession('Artist');
+		
+		
+// response error
+	return $this->execAction('error');
+
+
+
+//SEARCH SESSION
+	const SEARCH_SESSION_KEY = 'KdlAdminAjax\\Api\\Admin\\ProductList"
+
+	//set object to session
+		$this->setObjectToSession(self::SEARCH_SESSION_KEY, $this->request->getPost());
+
+	// get object from session
+		$data = $this->getObjectFromSession(self::SEARCH_SESSION_KEY);
+		// get an attribute
+		// get editUrl attribute, if exist return editUrl, else ''
+		$editUrl = $data->get('editUrl', '');
+	
+
+

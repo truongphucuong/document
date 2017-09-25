@@ -1,0 +1,5 @@
+BaseForm
+
+--attribute csrf token default true
+-- if don't using csrf
+	protected statis $addCsrf = false;
