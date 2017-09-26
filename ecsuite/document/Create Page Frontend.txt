@@ -1,0 +1,94 @@
+Create Page frontend
+
+Page was created by one or some blocks (ブロック)
+/admin/cms/page_block_list
+Block was created by one or some Block content - /admin/cms/page_block_content_list
+
+
+
+
+//
+- Access Admin page
+- In CMS
+	/admin/cms/page_list
+- Create Page Block Content
+	+ /admin/cms/page_block_content_list
+	+ /admin/cms/page_block_content_register/index
+	+ Enter the infomation of Block content
+		> Phần xỉ (パーツスラグ): [PC or SP or...]_[Nam trong muc nao: Header, Footer, Main]_[Name]_[Action]
+			PC_MAIN_PRODUCT_LIST
+		> Phần tên: 
+		> Phần giải thích: ko có cũng đc
+		> Loại (パーツタイプ)
+			* HTML
+			* Module (モジュール)
+				> Gói: Front
+				> Điều khiển: ProductList
+				=> Do đó nó nằm ở KdlContent\Front\ProductList\ProductListController.php
+				> Thông tin MVC: không bắt buộc
+					+ Hành động (アクション): 
+					+ Tham số (パラメータ):
+			* Thiết lập (設定)
+			* Tập tin (ファイル)
+		> ...
+		> Thêm khối (ブロック追加) checkbox, can create page block.....
+		
+		
+- Create Page block
+	+ /admin/cms/page_block_list
+	+ /admin/cms/page_register/index
+	+ Enter the info of Block
+		> Tên khối (ブロック名)
+		> Bố cục (ブロックレイアウト)
+			* Tiêu đề (ヘッダ)
+			* Trình đơn giản còn lại (左メニュー)
+			* Chính (メイン)
+			* Trình đơn giản bên phải (右メニュー)
+			* Footer (フッター)
+		> ...
+		> Hiện hay ẩn, để default
+		> Ngày, để default
+		> Chặn (ブロック)
+			> Chọn các mục của パーツ và chọn Search
+			> Click kéo thả qua bên Chặn
+		Xong
+	
+	
+	
+-  Create new page
+	+ /admin/cms/page_list
+	+ /admin/cms/page_register/index/1
+	+ Enter info of Page:
+	Thông tin trang (ページ情報):
+		> Phần trang, vị trí đường dẫn (ページセクション);
+			* /, ...
+		> Url: enter url
+		> Trạng thái Page (ページステータス):
+			* Chuẩn bị (準備中)
+			* Đang chờ phê duyệt (承認待ち)
+			* Hoàn tất chấp thuận (承認完了)
+		> Tiêu đề trang (ページタイトル): bắt buộc, nó dùng làm title, show in breadcrumd
+		> Mô tả trang, ID trong HTML, Trang lớp HTML: không bắt buộc
+		> SSL: không hoặc có
+		> Mô tả meta
+		> Từ khóa cho meta tag
+		> Hiện/Ẩn (表示 / 非表示): Ẩn (非表示), Hiện (表示)
+		> Cần Login (ログイン必要): yes or no
+		> Bộ nhớ HTML (HTMLキャッシュ): đừng tạo | tạo
+		> Thời gian gửi: để mặc định
+	Nội dung trang (ページ内容):
+		> Trình bày trang: chọn cách bố trí
+		> Mẫu trang: chọn cho phù hợp với cách bố trí
+		> CSS, JS thì nó có liệt kê CSS,JS mẫu, rê chuột vào
+		> Khối tìm kiếm
+			Chọn các tab, và kéo thả qua
+	Xong
+		
+- Enter info page
+- Enter block
+
+Controller
+KdlContent\Front\ProductList\ProductList
+
+View
+KdlView/view/template/Front/ProductList/index.phtml
