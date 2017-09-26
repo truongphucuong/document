@@ -1,0 +1,4 @@
+Entity Repository
+
+// call function 
+	$repository->getFindQuery($searchCondition);

@@ -1,4 +1,7 @@
 Controller
+//AbstractActionController;
+// use KdlController\AbstractController\AbstractActionController;
+
 // Request
 // get request
 	$request = $this->request->getPost();
@@ -27,7 +30,8 @@ Controller
 	$pageInfo = $this->getPageInfo();
 	$editUrl = $pageInfo['edit'];
 
-
+// ?????
+	$this->inputFilter4Form($this->ProductForm);
 
 
 
@@ -69,7 +73,8 @@ Controller
 		
 // response error
 	return $this->execAction('error');
-
+// execAction
+	retrun $this->execAction('index');
 
 
 //SEARCH SESSION
@@ -86,3 +91,10 @@ Controller
 	
 
 
+// AbstractFormController
+// use KdlController\AbstractController\AbstractFormController;
+
+// save post session
+	$this->savePostSession(__CLASS__, $this->ProductFormModel->getPostForSession($this->request->getPost()));
+// get post session
+	$data = $this->getPostSession(__CLASS_);

@@ -1,58 +1,85 @@
 
 //get all
-$albums = $this->getEntity('Album')->findAll();
+	$albums = $this->getEntity('Album')->findAll();
 
 //find id
-$id = $this->getEntity('Kind')->find($AlbumSession->getKindId());
+	$id = $this->getEntity('Kind')->find($AlbumSession->getKindId());
 
 //find one with condition
 //get album where albumId = ? and deleteFlag = ?
-$album = $this->getEntity('Album')->findOneBy([
-	'albumId' => $albumId, 
-	'deleteFlag' => Album::getConfigValue('deleteFlag', 'DELETE_FLAG_OFF')
-]);
+	$album = $this->getEntity('Album')->findOneBy([
+		'albumId' => $albumId, 
+		'deleteFlag' => Album::getConfigValue('deleteFlag', 'DELETE_FLAG_OFF')
+	]);
 
 //find all with condition
-$artists = $this->getEntity('Artist')->findBy([
-            'deleteFlag' => 0
-        ]); 
+	$artists = $this->getEntity('Artist')->findBy([
+            	'deleteFlag' => 0
+        	]); 
 //check result
-if(!$album){
-	return $this->execAction('error');
-}
+	if(!$album){
+		return $this->execAction('error');
+	}
 
 //sql
-$DbConnection = $this->getServiceLocator()->get('EntityManager')->getConnection();
-$sql = 'SELECT `m_product_detail_id`, `m_product_header_id`, `first_arrival_date`, `first_arrival_time` FROM `m_product_detail` WHERE `delete_flag` = :delete_flag ORDER BY `m_product_header_id`;';
-$statement_pd = $DbConnection->prepare($sql);
-$statement_pd->bindValue(':delete_flag', ProductHeader::getConfigValue('deleteFlag', 'DELETE_FLAG_OFF'));
+	$DbConnection = $this->getServiceLocator()->get('EntityManager')->getConnection();
+	$sql = 'SELECT `m_product_detail_id`, `m_product_header_id`, `first_arrival_date`, `first_arrival_time` 		FROM 		`m_product_detail` WHERE `delete_flag` = :delete_flag ORDER BY `m_product_header_id`;';
+	$statement_pd = $DbConnection->prepare($sql);
+	$statement_pd->bindValue(':delete_flag', ProductHeader::getConfigValue('deleteFlag', 'DELETE_FLAG_OFF'));
 
 
 
 
 //Query builder
 
-$EntityManager = $this->getEntityManager();
-$QueryBuilder = $EntityManager->createQueryBuilder();
+	$EntityManager = $this->getEntityManager();
+	$query = $EntityManager->createQueryBuilder();
 
-$QueryBuilder->select('mc.customerId, mc.customerPassword, mc.uniqueId, mc.cardId, '
+	$query->select('mc.customerId, mc.customerPassword, mc.uniqueId, mc.cardId, '
             . ' mc.nameSei, mc.nameMei, mc.kanaSei, mc.kanaMei, mc.email, '
-            . ' mc.phone, mc.fax, mc.sexCd, mc.birthDate, mc.mailType, mc.dmFlag, mc.dmDeliverType, mc.telReceiveStatus, mc.telDeliverType, mc.mailmagReceiveStatus, '
-            . ' mc.mailDeliverType, mc.htmlMailReceiveStatus, mc.smsReceiveStatus, mc.smsDeliverType, mc.messageType, mc.totalPoint, mc.deleteFlag, '
-            . ' cc.customerCategoryName, cc.bandColor as customerCategoryBandColor, cc.bandColorName as customerCategoryBandColorName, '
+            . ' mc.phone, mc.fax, mc.sexCd, mc.birthDate, mc.mailType, mc.dmFlag, mc.dmDeliverType, 				mc.telReceiveStatus, mc.telDeliverType, mc.mailmagReceiveStatus, '
+            . ' mc.mailDeliverType, mc.htmlMailReceiveStatus, mc.smsReceiveStatus, mc.smsDeliverType, 				mc.messageType, mc.totalPoint, mc.deleteFlag, '
+            . ' cc.customerCategoryName, cc.bandColor as customerCategoryBandColor, cc.bandColorName as 				customerCategoryBandColorName, '
             . ' mc.customerStatus, '
             . ' c.companyId, c.companyName, '
             . ' mc.departmentName, mc.postName, er.invitationFlag, mc.note, '
             . ' b.brandId, b.brandCode, b.brandName');
-$QueryBuilder->from(CustomerEntity::class, 'mc');
-//join
-$QueryBuilder->leftJoin(CustomerCategoryEntity::class, 'cc', 'WITH', 'mc.customerCategoryId = cc.customerCategoryId');
-$QueryBuilder->leftJoin(CompanyEntity::class, 'c', 'WITH', 'mc.companyId = c.companyId');
-//where
-$QueryBuilder->AndWhere($this->abbr . '.customerStatus IN ( ' . implode(',', $customerStatusList) . ' )');
-//group by
-$QueryBuilder->groupBy('mc.customerId');
+	
+	// from
+	$queryr->from(CustomerEntity::class, 'mc');
+	
+	// join
+	// left join
+	$query->leftJoin(CustomerCategoryEntity::class, 'cc', 'WITH', 'mc.customerCategoryId = 				cc.customerCategoryId');
+	// innerjoin
+	$query->innerJoin($this->ProductDetail, 'mpd', 'WITH', 'mph.productHeaderId = mpd.productHeaderId');
+	
+	// where
+	// where raw
+	$query->where('mph.deleteFlag = 0 AND mpd.deleteFlag = 0');
+	$catParams = implode(',', $categoryParam);
+	$query->where("mpc.productCategoryId IN ({$catParams})");
+	// and where
+	$query->AndWhere($this->abbr . '.customerStatus IN ( ' . implode(',', $customerStatusList) . ' )');
+	// or where
+	$query->orWhere("mpc.parentCategoryId IN ({$catParams})");
+	
+	//set Parameter
+	$query->where('ph.deleteFlag = 0 AND ph.productHeaderId != :productHeaderId AND ph.productCd = :productCd 		AND ph.brandId = :brandId');
+	$query->setParameters([':productHeaderId' => $productId, ':productCd' => $productCd, ':brandId' => 		$brandId]);
+	
+	// Group By
+	$query->groupBy('mc.customerId');
+	// Add Group By
+	$query->addGroupBy('mph.productHeaderId');
+	
+	//Having
+	$query->having('MAX(tps_1.stockCount) <= :stockCountTo AND MIN(tps_1.stockCount) >= :stockCountFrom');
 
+	// Order By
+	$query->orderBy('mph.productHeaderId', 'DESC');
+
+	$result = $query->getQuery()->getResult();
 
 
 
@@ -74,16 +101,54 @@ $QueryBuilder->groupBy('mc.customerId');
 
 
 //transaction
-$this->ServiceManager = Api::get()->getServiceManager();
-$this->EntityManager = $this->ServiceManager->get('EntityManager');
-try {
-    $this->EntityManager->getConnection()->beginTransaction();
-	//do some thing
-	$this->EntityManager->flush();
-    $this->EntityManager->clear();
-    $this->EntityManager->getConnection()->commit();
-} catch (Exception $exe) {
-    $this->EntityManager->getConnection()->rollback();
-    $this->ServiceManager->get('ErrorLogger')->err($exe->getMessage());
-    return false;
-}
+	$this->ServiceManager = Api::get()->getServiceManager();
+	$this->EntityManager = $this->ServiceManager->get('EntityManager');
+	try {
+    		$this->EntityManager->getConnection()->beginTransaction();
+		//do some thing
+		$this->EntityManager->flush();
+    		$this->EntityManager->clear();
+    		$this->EntityManager->getConnection()->commit();
+	} catch (Exception $exe) {
+   		$this->EntityManager->getConnection()->rollback();
+   	 	$this->ServiceManager->get('ErrorLogger')->err($exe->getMessage());
+    		return false;
+	}
+
+
+
+
+//ConditionSearch
+	// $productSearch ~ Zend\Stdlib\Parameters;
+	// get ProductSearch if exixts, else []
+	$productSearch = $productCondition->get('ProductSearch', []);
+	$sqlCondition = new SqlCondition($productCondition);
+
+	// like
+	$sqlCondition->addLike('mph.productName', 'productName');
+	// add  date time from to
+	$sqlCondition->addDateTimeFromTo('mph.createDate', 'mph.createTime', 'createDateFrom', 'createTimeFrom', 		'createDateTo', 'createTimeTo');
+	
+	// add range date from to
+
+	$sqlCondition->addRangeDateFromTo(('mph.displayFromDate', 'mph.displayFromTime', 'mph.displayToDate', 				'mph.displayToTime', 'displayFromDate', 'displayFromTime', 'displayToDate', 'displayToTime');
+
+	// add equal
+	$sqlCondition->addEqual('mph.showFlag', 'showFlag');
+
+	// add IN
+	$sqlCondition->addIn('mph.labelId', 'labelId');
+	
+	// add equal raw value
+	$sqlCondition->addEqualRawValue('mpg.deleteFlag', Product::getConfifValue('deleteFlag', ;DELETE_fLAGx
+
+	// Get where
+	$where = $sqlCondition->getWhere();
+
+	// Get param
+	$param = $sqlCondition->getParam();
+	
+	// 
+	$query->where($where);
+	$query->setParameters($param);
+	

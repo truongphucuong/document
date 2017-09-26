@@ -12,6 +12,8 @@
 -- get Hằng
 	$entity->getDeleteFlag('CONST')
 
+-- set delete flag on
+	$entity->setDeleteFlag('DELETE_FLAG_ON');
 --  to Array
 	$arr = $entity->toArray();
 
