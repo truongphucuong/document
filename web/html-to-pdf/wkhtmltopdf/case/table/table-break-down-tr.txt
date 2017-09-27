@@ -16,3 +16,7 @@ td{
 	page-break-inside: avoid;
 }
 	$ wkhtmltopdf --zoom 0.9 case.htm case.pdf
+
+
+https://github.com/wkhtmltopdf/wkhtmltopdf/issues/2029#issuecomment-257556479
+Using --zoom 0.8 flag resolves similar issue for me. The source of such workaround is the fact that we only have cropping occuring on Unix while Windows produces proper PDFs. People say that this is due to the fact that default dpi differs for the platforms.

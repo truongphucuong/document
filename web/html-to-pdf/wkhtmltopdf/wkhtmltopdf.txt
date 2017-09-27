@@ -8,3 +8,11 @@ thead {display: table-row-group}
 
 
 /usr/sbin/wkhtmltopdf --print-media-type --margin-top 15mm --margin-bottom 15mm --margin-left 15mm --margin-right 15mm --encoding utf8 --footer-right "Seite [page] von [toPage]" -s A4 
+
+
+
+// 
+wkhtmltopdf --margin-top 0 --margin-bottom 0 --margin-left 0 --margin-right 0 <url> <output>
+shortens to
+
+wkhtmltopdf -T 0 -B 0 -L 0 -R 0 <url> <output>
