@@ -59,13 +59,29 @@ https://gist.github.com/r-sal/4313500
 	// Default style
 		$objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')->setSize(10);
 	// Font
+		// 
+		$objPHPExcel->getActiveSheet()
+			->getStyle('A1:B1')
+			->applyFromArray(array(
+				'font' => array(
+					'size' => 10,
+					'bold' => true,
+					'color' => array('rgb' => '000000')
+				)
+			)	
+		);
+		//
 		$sheet->getStyle('B1')->getFont()
 			->setName('Candara')
 			->setSize(20)
 			->setBold(true)
 			->setUnderline(PHPExcel_Style_Font::UNDERLINE_SINGLE)
 			->setARGB(PHPExcel_Style_Color::COLOR_WHITE);
-	
+		// Color
+			$objPHPExcel->getActiveSheet()
+				->getFont()
+				->getColor()
+				->setARGB(\PHPExcel_Style_Color::COLOR_RED);
 	// Share Style
 		$sharedStyle = new \PHPExcel_Style();
         $sharedStyle->applyFromArray(
@@ -80,7 +96,12 @@ https://gist.github.com/r-sal/4313500
             )
         );
 		$objPHPExcel->getActiveSheet()->setSharedStyle($sharedStyle, "A1:T100");
-	
+	// Fill - Background Color
+		$objPHPExcel->getActiveSheet()
+			->getStyle()
+			->getFill()
+			->getStartColor()->setARGB('FFCCFFCC');
+		// or
 	// Alignment
 		//
 			$sheet->getStyle('D11')
