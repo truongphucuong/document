@@ -1,0 +1,9 @@
+PHPExcel
+https://github.com/PHPOffice/PHPExcel
+
+Install
+$composer require phpoffice/phpexcel
+
+Note:
+	- PHPExcel 1.8.0 error with PHP7
+	- PHPExcel 1.8.1 support PHP7

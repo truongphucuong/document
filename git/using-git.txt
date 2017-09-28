@@ -45,3 +45,7 @@ Git command
 	$ git push -f origin master
 	// then enter account to push Github
 
+
+
+// rename folder
+	$ git mv [old-folder-name] [new-folder-name]
