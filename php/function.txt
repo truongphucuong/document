@@ -1,3 +1,10 @@
 echo getcwd();
 
 set_time_limit(0);
+
+// memory used:
+	$before = memory_get_usage(true);
+		// do some thing
+		
+	$after = memory_get_usage(true);
+	printf("usage before loading xlsx file %s\nusage after loading xlsx file %s\ndelta usage %s", $before, $after, $after - $before);

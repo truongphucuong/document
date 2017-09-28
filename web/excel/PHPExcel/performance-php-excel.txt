@@ -46,7 +46,10 @@ Performance
 	- 
 		$sheetData = $objPHPExcel->getActiveSheet()->toArray();
 	- Iterators and GC Optimization
-		/* @var $phpExcel \PHPExcel */
+
+	
+	
+/* @var $phpExcel \PHPExcel */
 $phpExcel = $this->getPhpExcel($fileName);
 $sheetIter = $phpExcel->getWorksheetIterator();
 

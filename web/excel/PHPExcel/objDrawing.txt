@@ -1,41 +1,36 @@
 // objDrawing
 
 // Image
-// Path Image
-	$objDrawing = new \PHPExcel_Worksheet_Drawing();
-    $objDrawing->setName('Sample image');
-    $objDrawing->setDescription('Sample image');
-	// set path for image
-    $objDrawing->setPath($pathLogo . $key['image']);            
-    $objDrawing->setHeight(150);
-    $objDrawing->setWidth(150);
-    $objDrawing->setCoordinates('C'.$i);
+	// Path Image
+		//
+        $objDrawing = new \PHPExcel_Worksheet_Drawing();
+        $objDrawing->setName('Sample image')
+            ->setDescription('Sample image')
 
-    $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
+            ->setPath($pathLogo . $key['image'])
+            ->setOffsetX(25)   //setOffsetX works properly
+            ->setOffsetY(10)   //setOffsetY works properly           
+            ->setHeight(150)
+            ->setWidth(150)
+            ->setCoordinates('C'.$i)
+            ->setWorksheet($objPHPExcel->getActiveSheet());
 
 
-// Resource Image
-    $objDrawing = new PHPExcel_Worksheet_MemoryDrawing();
-    $objDrawing->setName('Sample image');
-    $objDrawing->setDescription('Sample image');
-    $gdImage = imagecreatefrompng( $pathLogo . 'logo.png');
-    $objDrawing->setImageResource($gdImage);
-	// destroy image
-	imagedestroy($gdImage);
-    $objDrawing->setRenderingFunction(PHPExcel_Worksheet_MemoryDrawing::RENDERING_JPEG);
-    $objDrawing->setMimeType(PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_DEFAULT);
-    $objDrawing->setHeight(150);
-	$objDrawing->setWidth(150);
-    $objDrawing->setCoordinates('C1');
-	
-    $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
-	
-	
-// Link
-	//set the value of the cell
-                    $objPHPExcel->getActiveSheet()->SetCellValue($column.$cell, $reportdetails[$rowCount][$value]);
-                    //change the data type of the cell
-                    $objPHPExcel->getActiveSheet()->getCell($column.$cell)->setDataType(PHPExcel_Cell_DataType::TYPE_STRING2);
-                    ///now set the link
-                    $objPHPExcel->getActiveSheet()->getCell($column.$cell)->getHyperlink()->setUrl(strip_tags($reportdetails[$rowCount][$value]));
-	
+	// Resource Image
+		// Need large memory for image
+		// Note: if records > 100, maximun memory of PHP
+		// Soluttion: Resize and convert resulation image down
+		
+		$objDrawing = new PHPExcel_Worksheet_MemoryDrawing();
+		$objDrawing->setName('Sample image');
+		$objDrawing->setDescription('Sample image');
+		$gdImage = imagecreatefromjpeg( $pathLogo . 'logo.jpg');
+		$objDrawing->setImageResource($gdImage);
+		// destroy image => don't display image // imagedestroy($gdImage);
+		$objDrawing->setRenderingFunction(PHPExcel_Worksheet_MemoryDrawing::RENDERING_JPEG);
+		$objDrawing->setMimeType(PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_DEFAULT);
+		$objDrawing->setHeight(150);
+		$objDrawing->setWidth(150);
+		$objDrawing->setCoordinates('C1');
+		
+		$objDrawing->setWorksheet($objPHPExcel->getActiveSheet());

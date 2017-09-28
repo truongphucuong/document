@@ -1,9 +1,9 @@
 PHPExcel -> support with image
-		-> slow
+		-> slow, need large memory
 
 
 spout 	-> don't support image
-		-> fast
+		-> fast, work for large file
 		http://opensource.box.com/spout/
 
 libXl	-> ban quyen, fast

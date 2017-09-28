@@ -1,5 +1,17 @@
 PHPExcel
 https://gist.github.com/r-sal/4313500
+
+// Cell Caching:
+	https://github.com/PHPOffice/PHPExcel/blob/develop/Documentation/markdown/Overview/04-Configuration-Settings.md
+	- cache_to_discISAM:
+		// It work 10,000 rows with 6 colums
+		$cacheMethod = PHPExcel_CachedObjectStorageFactory:: cache_to_discISAM;
+		$cacheSettings = array( 
+    			'dir' => '/usr/local/tmp'
+		);
+		PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
+	
+
 // Create new PHPExcel
 	$objPHPExcel = new PHPExcel();
 
@@ -27,13 +39,13 @@ https://gist.github.com/r-sal/4313500
 
 
 
-// set style column
+// Column Style
 	// set width
-	$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(30);
+		$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(30);
 	// set auto size
-	$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+		$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
 	
-// set row
+// Row Style
 	$objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(90);
 	
 	
@@ -71,9 +83,15 @@ https://gist.github.com/r-sal/4313500
 	
 	// Alignment
 		//
-			$sheet->getStyle('D11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-			$sheet->getStyle('A18')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
-			$sheet->getStyle('A18')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+			$sheet->getStyle('D11')
+				->getAlignment()
+				->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+			$sheet->getStyle('A18')
+				->getAlignment()
+				->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
+			$sheet->getStyle('A18')
+				->getAlignment()
+				->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 			$sheet->getStyle('B5')->getAlignment()->setShrinkToFit(true);
 		// Center
 			$objPHPExcel->getActiveSheet()

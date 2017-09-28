@@ -1,0 +1,115 @@
+// PHPExcel
+
+		$start = time();
+        $tests = $this->getTestTable()->getTestExcelAll();
+
+
+        // set caching configuration
+        $cacheMethod = \PHPExcel_CachedObjectStorageFactory::cache_in_memory_gzip;
+        \PHPExcel_Settings::setCacheStorageMethod($cacheMethod);
+        // Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+        // Set properties
+        $objPHPExcel->getProperties()
+            ->setCreator("Jobin Jose")->setLastModifiedBy("Jobin Jose")
+            ->setTitle("Office 2007 XLSX Test Document")
+            ->setSubject("Office 2007 XLSX Test Document")
+            ->setDescription("Test document for Office 2007 XLSX, generated using PHPExcel classes.");
+
+        $objPHPExcel->setActiveSheetIndex(0);
+
+        $sharedStyle = new \PHPExcel_Style();
+        $sharedStyle->applyFromArray(
+            array(
+                'borders' => array(
+                    'bottom' => array('style' => \PHPExcel_Style_Border::BORDER_THIN),
+                    'right'  => array('style' => \PHPExcel_Style_Border::BORDER_MEDIUM)
+                )
+            )
+        );
+        $rowTotal = count($tests) + 1;
+
+        $objPHPExcel->getActiveSheet()
+            ->setSharedStyle($sharedStyle, 'A1:J' . $rowTotal)
+            ->getStyle('A1:J1')
+            ->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        // header
+
+        $cellHeader = array(
+            'A' => 'ID',
+            'B' => 'Title',
+            'C' => 'Image',
+            'D' => 'Title',
+            'E' => 'Title',
+            'F' => 'Title',
+            'G' => 'Title',
+            'H' => 'Title',
+            'I' => 'Title',
+            'J' => 'Title'
+        );
+        // Build headers
+        foreach( $cellHeader as $key => $value )
+        {
+            if ($value == 'Image') {
+                $objPHPExcel->getActiveSheet()->getColumnDimension($key)->setWidth(30);
+            } else {
+                $objPHPExcel->getActiveSheet()->getColumnDimension($key)->setAutoSize(true);
+            }
+            $objPHPExcel->getActiveSheet()->setCellValue($key . '1', $value );
+        }
+        $i = 2;
+        $pathLogo = getcwd() . '/public/img/';
+
+        foreach ($tests as $key) {
+            $objPHPExcel->getActiveSheet()->getRowDimension($i)->setRowHeight(90);
+
+            if ($i % 2 > 0) {
+                $objPHPExcel->getActiveSheet()
+                    ->getStyle('A'.$i.':J'.$i)
+                    ->getFill()->applyFromArray(
+                        array(
+                            'type'     => \PHPExcel_Style_Fill::FILL_SOLID,
+                            'color' => array('argb' => 'FFCCFFCC')
+                        )
+                    );
+
+            }
+            //image
+            $objDrawing = new \PHPExcel_Worksheet_Drawing();
+            $objDrawing->setName('Sample image')
+                ->setDescription('Sample image')
+                ->setPath($pathLogo . $key['image'])
+                ->setOffsetX(25)   //setOffsetX works properly
+                ->setOffsetY(10)   //setOffsetY works properly           
+                ->setHeight(150)
+                ->setWidth(150)
+                ->setCoordinates('C'.$i)
+                ->setWorksheet($objPHPExcel->getActiveSheet());
+
+            $objPHPExcel->getActiveSheet()
+                ->SetCellValue('A'.$i, $key['id'])
+                ->SetCellValue('B'.$i, $key['title'])
+                ->SetCellValue('D'.$i, $key['title'])
+                ->SetCellValue('E'.$i, $key['title'])
+                ->SetCellValue('F'.$i, $key['title'])
+                ->SetCellValue('G'.$i, $key['title'])
+                ->SetCellValue('H'.$i, $key['title'])
+                ->SetCellValue('I'.$i, $key['title'])
+                ->SetCellValue('J'.$i, $key['title']);
+            $i++;
+        }
+        
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        // If you're using formulae in your workbook, when saving:
+        // to disable calculating the formulae within PHPExcel itself.
+        $objWriter->setPreCalculateFormulas(false);
+        $objWriter->save(getcwd() . '/public/excelnew6.xlsx'); //xlsx
+        $finish = time();
+        echo 'Finish ' . $finish . '-'. $start . '=' . ($finish-$start);
+
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        // header('Content-Disposition: attachment;filename="test.xls"');
+        // header('Cache-Control: max-age=0');
+        // $objWriter->save('php://output');
+        exit;
