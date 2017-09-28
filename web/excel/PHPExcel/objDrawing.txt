@@ -1,0 +1,41 @@
+// objDrawing
+
+// Image
+// Path Image
+	$objDrawing = new \PHPExcel_Worksheet_Drawing();
+    $objDrawing->setName('Sample image');
+    $objDrawing->setDescription('Sample image');
+	// set path for image
+    $objDrawing->setPath($pathLogo . $key['image']);            
+    $objDrawing->setHeight(150);
+    $objDrawing->setWidth(150);
+    $objDrawing->setCoordinates('C'.$i);
+
+    $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
+
+
+// Resource Image
+    $objDrawing = new PHPExcel_Worksheet_MemoryDrawing();
+    $objDrawing->setName('Sample image');
+    $objDrawing->setDescription('Sample image');
+    $gdImage = imagecreatefrompng( $pathLogo . 'logo.png');
+    $objDrawing->setImageResource($gdImage);
+	// destroy image
+	imagedestroy($gdImage);
+    $objDrawing->setRenderingFunction(PHPExcel_Worksheet_MemoryDrawing::RENDERING_JPEG);
+    $objDrawing->setMimeType(PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_DEFAULT);
+    $objDrawing->setHeight(150);
+	$objDrawing->setWidth(150);
+    $objDrawing->setCoordinates('C1');
+	
+    $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
+	
+	
+// Link
+	//set the value of the cell
+                    $objPHPExcel->getActiveSheet()->SetCellValue($column.$cell, $reportdetails[$rowCount][$value]);
+                    //change the data type of the cell
+                    $objPHPExcel->getActiveSheet()->getCell($column.$cell)->setDataType(PHPExcel_Cell_DataType::TYPE_STRING2);
+                    ///now set the link
+                    $objPHPExcel->getActiveSheet()->getCell($column.$cell)->getHyperlink()->setUrl(strip_tags($reportdetails[$rowCount][$value]));
+	

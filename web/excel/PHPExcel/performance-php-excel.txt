@@ -1,0 +1,99 @@
+Performance
+
+// write
+	// https://stackoverflow.com/questions/5983845/phpexcel-very-slow-ways-to-improve
+	- you're only accessing the getActiveSheet() method once
+		// thay vi dung:
+		$objPHPExcel->getActiveSheet()
+            ->SetCellValue('A1', $key['id']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('B1', $key['title']);
+		// Thì, đỡ load lại getActiveSheet
+		$objPHPExcel->getActiveSheet()
+            ->SetCellValue('A'.$i, $key['id'])
+            ->SetCellValue('B'.$i, $key['title']);
+		// Or create var activeSheet
+		$activeSheet = $objPHPExcel->getActiveSheet();
+		$activeSheet->setCellValue('A1', 'Data');
+		$activeSheet->setCellValue('A2', 'Data');
+	- Setting cell values using fromArray()
+		// https://github.com/PHPOffice/PHPExcel/blob/develop/Documentation/markdown/Overview/07-Accessing-Cells.md
+		$arrayData = array(
+			array(NULL, 2010, 2011, 2012),
+			array('Q1',   12,   15,   21),
+			array('Q2',   56,   73,   86),
+			array('Q3',   52,   61,   69),
+			array('Q4',   30,   32,    0),
+		);
+
+		$as = $objPHPExcel->getActiveSheet();
+
+		$as->fromArray(
+			$arrayData,  // The data to set
+			NULL,        // Array values with this value will not be set
+			'C3'         // Top left coordinate of the worksheet range where
+						 //    we want to set these values (default is A1)
+		);
+		
+		
+
+		
+// read
+	- Source:
+		https://blog.bitexpert.de/blog/think-about-it-phpexcel-performance-tweaks-part-1/
+	- Cache Cell Index in Memory
+		$cacheMethod = \PHPExcel_CachedObjectStorageFactory::cache_in_memory_gzip;
+        \PHPExcel_Settings::setCacheStorageMethod($cacheMethod);
+	- 
+		$sheetData = $objPHPExcel->getActiveSheet()->toArray();
+	- Iterators and GC Optimization
+		/* @var $phpExcel \PHPExcel */
+$phpExcel = $this->getPhpExcel($fileName);
+$sheetIter = $phpExcel->getWorksheetIterator();
+
+// iterator over sheets
+foreach ($sheetIter as $currentSheet) {
+    // get row iterator
+    $rowIter = $currentSheet->getRowIterator();
+    $rowIter->resetStart($startRow);
+
+    // iterate over rows
+    foreach ($rowIter as $row) {
+        /* @var $row \PHPExcel_Worksheet_Row */			
+        // get cell iterator
+        $cellIter = $row->getCellIterator();
+        $cellIter->setIterateOnlyExistingCells(false);
+
+        // iterate over cells
+        for (; $cellIter->valid(); $cellIter->next()) {
+            /* @var $cell \PHPExcel_Cell */
+            $cell = $cellIter->current();
+            // $cell->getValue()
+        }
+    }
+}
+
+// Optimized garbage collection
+$phpExcel->disconnectWorksheets();
+unset($phpExcel);
+-----
+	- Custome Read Filters
+		class CustomFilter implements \PHPExcel_Reader_IReadFilter 
+		{ 
+			public function readCell($column, $row, $worksheetName = '') 
+			{ 
+				// Read rows 1 to 7 and columns A to E only 
+				if ($row >= 1 && $row <= 7) { 
+					if (\in_array($column,range('A','E'))) { 
+						return true; 
+					} 
+				} 
+				return false; 
+			} 
+		}
+		// The custom filter must be set by the object reader method setReaderFilter.
+		$readFilter = new \CustomFilter(); 
+		$objReader = \PHPExcel_IOFactory::createReader($inputFileType); 
+		$objReader->setReadFilter($readFilter);  
+		$objPHPExcel = $objReader->load($inputFileName);
+
+	- 

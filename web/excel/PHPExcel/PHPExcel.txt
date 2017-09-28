@@ -1,0 +1,177 @@
+PHPExcel
+https://gist.github.com/r-sal/4313500
+// Create new PHPExcel
+	$objPHPExcel = new PHPExcel();
+
+// Working with sheets
+	// Create a new sheet
+		$activeSheet = $objPHPExcel->createSheet();
+	// Get the active Sheet
+		$activeSheet = $objPHPExcel->getActiveSheet();
+	// Setting the active Sheet
+		$objPHPExcel->setActiveSheetIndex(1);
+	// Set properties
+        $objPHPExcel->getProperties()
+            ->setCreator("Jobin Jose")
+			->setLastModifiedBy("Jobin Jose")
+            ->setTitle("Office 2007 XLSX Test Document")
+            ->setSubject("Office 2007 XLSX Test Document")
+            ->setDescription("Test document for Office 2007 XLSX, generated using PHPExcel classes.");
+
+        $objPHPExcel->setActiveSheetIndex(0);
+
+// Save
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->setPreCalculateFormulas(false);
+        $objWriter->save(getcwd() . '/public/excelnew2.xlsx'); //xlsx
+
+
+
+// set style column
+	// set width
+	$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(30);
+	// set auto size
+	$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+	
+// set row
+	$objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(90);
+	
+	
+// Styles
+	// 
+		$objPHPExcel->getActiveSheet()->getStyle('A6')
+			->getNumberFormat()
+			->setFormatCode(
+				PHPExcel_Style_NumberFormat::FORMAT_DATE_DATETIME
+			);
+	// Default style
+		$objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')->setSize(10);
+	// Font
+		$sheet->getStyle('B1')->getFont()
+			->setName('Candara')
+			->setSize(20)
+			->setBold(true)
+			->setUnderline(PHPExcel_Style_Font::UNDERLINE_SINGLE)
+			->setARGB(PHPExcel_Style_Color::COLOR_WHITE);
+	
+	// Share Style
+		$sharedStyle = new \PHPExcel_Style();
+        $sharedStyle->applyFromArray(
+            array('fill'  => array(
+                    'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                    'color' => array('argb' => 'FFCCFFCC')
+                ),
+                'borders' => array(
+                    'bottom' => array('style' => \PHPExcel_Style_Border::BORDER_THIN),
+                    'right'  => array('style' => \PHPExcel_Style_Border::BORDER_MEDIUM)
+                )
+            )
+        );
+		$objPHPExcel->getActiveSheet()->setSharedStyle($sharedStyle, "A1:T100");
+	
+	// Alignment
+		//
+			$sheet->getStyle('D11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+			$sheet->getStyle('A18')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
+			$sheet->getStyle('A18')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+			$sheet->getStyle('B5')->getAlignment()->setShrinkToFit(true);
+		// Center
+			$objPHPExcel->getActiveSheet()
+				->getStyle('C2:I5')
+				->getAlignment()
+				->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		// Right
+			$objPHPExcel->getActiveSheet()
+				->getStyle('C2:I5')
+				->getAlignment()
+				->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+				
+				
+	// Set WrapText, default false
+		->getStyle("D1:D20")->getAlignment()->setWrapText(true);
+		
+	// format code
+		// Set cell A10 with a numeric value
+		$objPHPExcel->getActiveSheet()->setCellValue('A10', 1513789642);
+		// Set a number format mask to display the value as 11 digits with leading zeroes
+		$objPHPExcel->getActiveSheet()->getStyle('A10')
+			->getNumberFormat()
+			->setFormatCode(
+				'0000-000-0000'
+		); // 1513-78-9642
+		
+		// Number Format
+			PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2 //2012-12-18
+			PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME4 //3:06:11
+			PHPExcel_Style_NumberFormat::FORMAT_DATE_DATETIME //18/12/12 3:06
+			//
+			$sheet->getStyle('A1')
+			->getNumberFormat()
+			->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2);  //2012-12-18
+			// 
+			$dateTimeNow = time();
+			$sheet->setCellValue('A1', PHPExcel_Shared_Date::PHPToExcel( $dateTimeNow ));
+// Cells
+	// Write data to cell
+		$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Value');
+		
+		$objPHPExcel->getActiveSheet()
+			->setCellValue('A1', 'Value')
+			->setCellValue('A2', 'Value');
+		// or
+		$objPHPExcel->getActiveSheet()->setCellValueColumnAndRow($colmn, $rowm $data)'
+		// or
+		$objPHPExcel->getActiveSheet()
+			->setCellValueExplicit($coord, $value, $dataType); 
+			->setCellValueExplicitByColumnAndRow($col, $row, $value, $dataType);
+	// Write from Array
+		// https://github.com/PHPOffice/PHPExcel/blob/develop/Documentation/markdown/Overview/07-Accessing-Cells.md
+		$arrayData = array(
+			array(NULL, 2010, 2011, 2012),
+			array('Q1',   12,   15,   21),
+			array('Q2',   56,   73,   86),
+			array('Q3',   52,   61,   69),
+			array('Q4',   30,   32,    0),
+		);
+
+		$as = $objPHPExcel->getActiveSheet();
+
+		$as->fromArray(
+			$arrayData,  // The data to set
+			NULL,        // Array values with this value will not be set
+			'C3'         // Top left coordinate of the worksheet range where
+						 //    we want to set these values (default is A1)
+		);
+		
+	// Merging cell	
+		$objPHPExcel->getActiveSheet()->mergeCells('A1:I1'); 
+		// unmerge
+		$objPHPExcel->getActiveSheet()->unmergeCells('A1:I1');
+	// Cell Link
+		$objPHPExcel->getActiveSheet()->setCellValue('E26', 'www.phpexcel.net');
+		$objPHPExcel->getActiveSheet()->getCell('E26')->setDataType(PHPExcel_Cell_DataType::TYPE_STRING2);
+		$objPHPExcel->getActiveSheet()->getCell('E26')->getHyperlink()->setUrl('http://www.phpexcel.net');
+		$objPHPExcel->getActiveSheet()->getCell('E26')->getHyperlink()->setTooltip('Navigate to website');
+		$objPHPExcel->getActiveSheet()->getStyle('E26')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+	// 
+// Row
+	// Insert and removing row and columns
+		$objPHPExcel->getActiveSheet()->insertNewRowBefore(6, 10);
+		$objPHPExcel->getActiveSheet()->removeRow(6, 10);
+		$objPHPExcel->getActiveSheet()->insertNewColumnBefore('E', 5);
+		$objPHPExcel->getActiveSheet()->removeColumn('E', 5);
+	//
+	
+// Set page orientation and size
+	$objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_PORTRAIT);
+	$objPHPExcel->getActiveSheet()->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+	
+
+
+	
+// Setting a column width 4.6.28
+
+
+
+	
+// http://www.bainweb.com/2012/01/phpexcel-style-reference-complete-list.html

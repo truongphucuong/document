@@ -6,5 +6,5 @@ spout 	-> don't support image
 		-> fast
 		http://opensource.box.com/spout/
 
-libXl	-> ban quyen
+libXl	-> ban quyen, fast
 	-> libxl.com
