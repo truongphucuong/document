@@ -1,20 +1,47 @@
 Excel XML format
 	- Can't add image
+	- Note support image
 	https://en.wikipedia.org/wiki/Microsoft_Office_XML_formats
 	https://blogs.msdn.microsoft.com/brian_jones/2005/06/27/introduction-to-excel-xml-part-1-creating-a-simple-table/
-	<xml><image>AAECAwQFBgcICQ==</image></xml>
-	how you do this encoding varies per architecture. For example, with .NET you might use Convert.ToBase64String, or XmlWriter.WriteBase64.
 
 Code Example:
 
 <?xml version="1.0" encoding="UTF-8"?>
 <?mso-application progid="Excel.Sheet"?>
 <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">
+	
+	
+	<Styles>
+		<Style ss:ID="Default" ss:Name="Normal">
+			<Alignment ss:Vertical="Bottom"/>
+			<Borders/>
+			<Font/>
+			<Interior/>
+			<NumberFormat/>
+			<Protection/>
+		</Style>
+		<Style ss:ID="BoldColumn">
+			<Font x:Family="Swiss" ss:Bold="1"/>
+		</Style>
+		<Style ss:ID="StringLiteral">
+			<NumberFormat ss:Format="@"/>
+		</Style>
+		<Style ss:ID="Decimal">
+			<NumberFormat ss:Format="0.0000"/>
+		</Style>
+		<Style ss:ID="Integer">
+			<NumberFormat ss:Format="0"/>
+		</Style>
+		<Style ss:ID="DateLiteral">
+			<NumberFormat ss:Format="mm/dd/yyyy;@"/>
+		</Style>
+	</Styles>
+	
 	<Worksheet ss:Name="CognaLearn+Intedashboard">
 
 		<Table>
 			<Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="110"/>
-			<Row>
+			<Row ss:StyleID="BoldColumn">
 				<Cell><Data ss:Type="String">ID</Data></Cell>
 				<Cell><Data ss:Type="String">Project</Data></Cell>
 				<Cell><Data ss:Type="String">Reporter</Data></Cell>

@@ -37,7 +37,25 @@ https://gist.github.com/r-sal/4313500
         $objWriter->setPreCalculateFormulas(false);
         $objWriter->save(getcwd() . '/public/excelnew2.xlsx'); //xlsx
 
-
+// Read
+	//
+		$objReader = PHPExcel_IOFactory::createReader('Excel2007' ); //Create a 2007 read object
+		$objPHPExcel = $objReader->load ("05featuredemo.xlsx" );             //Read a xlsx file
+		foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {     //Ergodic sheet
+			echo 'Worksheet - ' , $worksheet->getTitle() , PHP_EOL;
+			foreach ($worksheet->getRowIterator() as $row) {       //Traverse line
+				echo '    Row number - ' , $row->getRowIndex() , PHP_EOL;
+				$cellIterator = $row->getCellIterator();   //All columns
+				$cellIterator->setIterateOnlyExistingCells( false); // Loop all cells, even if it is not set
+				foreach ($cellIterator as $cell) { //Traversal list
+					if (!is_null($cell)) { //If the column is not to get coordinates and calculate its value
+                        echo '        Cell - ' , $cell->getCoordinate() , ' - ' , $cell->getCalculatedValue() , PHP_EOL;
+					} // end
+				}
+			}
+		}
+		
+		
 
 // Column Style
 	// set width
@@ -77,7 +95,7 @@ https://gist.github.com/r-sal/4313500
 			->setBold(true)
 			->setUnderline(PHPExcel_Style_Font::UNDERLINE_SINGLE)
 			->setARGB(PHPExcel_Style_Color::COLOR_WHITE);
-		// Color
+		// Color set
 			$objPHPExcel->getActiveSheet()
 				->getFont()
 				->getColor()
@@ -102,6 +120,14 @@ https://gist.github.com/r-sal/4313500
 			->getFill()
 			->getStartColor()->setARGB('FFCCFFCC');
 		// or
+		$objPHPExcel->getActiveSheet()
+			->getStyle('A'.$i.':J'.$i)
+			->getFill()->applyFromArray(
+				array(
+					'type'     => \PHPExcel_Style_Fill::FILL_SOLID,
+					'color' => array('argb' => 'FFCCFFCC')
+				)
+			);
 	// Alignment
 		//
 			$sheet->getStyle('D11')

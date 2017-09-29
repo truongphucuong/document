@@ -8,3 +8,13 @@ set_time_limit(0);
 		
 	$after = memory_get_usage(true);
 	printf("usage before loading xlsx file %s\nusage after loading xlsx file %s\ndelta usage %s", $before, $after, $after - $before);
+
+
+	
+// Error header download
+	// error: echo, print.... before header() function
+	
+	ob_start();
+	// code
+	
+	ob_end_flush();
