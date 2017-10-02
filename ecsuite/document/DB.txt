@@ -152,3 +152,26 @@
 	$query->where($where);
 	$query->setParameters($param);
 	
+
+
+// 
+
+
+if ($property && $value) {
+            $key_param = ':' . $property;
+            $sql = ' AND cu.' . $property . ' = ' . $key_param;
+            $param = [
+                $key_param => $value
+            ];
+            $Customer = $this->_em->createQueryBuilder()
+                ->select('cu')
+                ->from('KdlEntity\Entity\Customer', 'cu')
+                ->where('cu.deleteFlag = 0 AND cu.customerStatus = 3 AND ( cu. memberWithdrawDate IS NULL OR cu. memberWithdrawDate =\'0000-00-00\' ) ' . $sql)
+                ->setParameters($param)
+                ->getQuery()
+                ->setMaxResults(1)
+                ->getOneOrNullResult();
+            if ($Customer) {
+                return $Customer;
+            }
+        }

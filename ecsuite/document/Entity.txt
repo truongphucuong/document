@@ -29,3 +29,10 @@ create new entity
 nếu khỏi tạo như vậy, khi create update delete nó sẽ sinh ra lỗi nếu có khóa ngoại nên cần find các khóa ngoại trước
 
 	EX:$Entity->setArtist($EntityService->getEntity('Artist')->find($Entity->getArtistId()));
+
+
+// Convert from Form to Entity
+	- Add attribute entity name of form
+		protected $entityName= 'Customer';
+	// Customer Entity
+	$Customer = $Form->hydrate('Customer');
