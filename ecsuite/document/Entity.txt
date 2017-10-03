@@ -36,3 +36,11 @@ nếu khỏi tạo như vậy, khi create update delete nó sẽ sinh ra lỗi n
 		protected $entityName= 'Customer';
 	// Customer Entity
 	$Customer = $Form->hydrate('Customer');
+
+
+
+
+
+
+// Note:
+	- Mỗi lần mà khi ta thêm cột hay gì đó, và khi ta thêm attribute trong Entity mà nó ko nhận biết => nên xóa Cache trong Admin

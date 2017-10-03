@@ -37,9 +37,9 @@
 
 	$query->select('mc.customerId, mc.customerPassword, mc.uniqueId, mc.cardId, '
             . ' mc.nameSei, mc.nameMei, mc.kanaSei, mc.kanaMei, mc.email, '
-            . ' mc.phone, mc.fax, mc.sexCd, mc.birthDate, mc.mailType, mc.dmFlag, mc.dmDeliverType, 				mc.telReceiveStatus, mc.telDeliverType, mc.mailmagReceiveStatus, '
-            . ' mc.mailDeliverType, mc.htmlMailReceiveStatus, mc.smsReceiveStatus, mc.smsDeliverType, 				mc.messageType, mc.totalPoint, mc.deleteFlag, '
-            . ' cc.customerCategoryName, cc.bandColor as customerCategoryBandColor, cc.bandColorName as 				customerCategoryBandColorName, '
+            . ' mc.phone, mc.fax, mc.sexCd, mc.birthDate, mc.mailType, mc.dmFlag, mc.dmDeliverType, 						mc.telReceiveStatus, mc.telDeliverType, mc.mailmagReceiveStatus, '
+            . ' mc.mailDeliverType, mc.htmlMailReceiveStatus, mc.smsReceiveStatus, mc.smsDeliverType, 						mc.messageType, mc.totalPoint, mc.deleteFlag, '
+            . ' cc.customerCategoryName, cc.bandColor as customerCategoryBandColor, cc.bandColorName as 					customerCategoryBandColorName, '
             . ' mc.customerStatus, '
             . ' c.companyId, c.companyName, '
             . ' mc.departmentName, mc.postName, er.invitationFlag, mc.note, '
@@ -50,7 +50,7 @@
 	
 	// join
 	// left join
-	$query->leftJoin(CustomerCategoryEntity::class, 'cc', 'WITH', 'mc.customerCategoryId = 				cc.customerCategoryId');
+	$query->leftJoin(CustomerCategoryEntity::class, 'cc', 'WITH', 'mc.customerCategoryId = 						cc.customerCategoryId');
 	// innerjoin
 	$query->innerJoin($this->ProductDetail, 'mpd', 'WITH', 'mph.productHeaderId = mpd.productHeaderId');
 	
@@ -83,7 +83,64 @@
 
 
 
+////////////////////////////////////////////////
+SELECT 	toi.t_order_item_id, 
+			mph.m_product_header_id, 
+			mpd.m_product_detail_id, 
+			mph.product_name, 
+			toi.product_cd,
+			mpd.sku,
+			SUM( CASE WHEN toh.m_customer_id = 1 THEN toi.product_count ELSE 0 END) AS Total
+			
+FROM m_product_detail mpd
+	LEFT JOIN m_product_header mph ON mpd.m_product_header_id = mph.m_product_header_id
+	LEFT JOIN t_order_item toi ON mpd.m_product_detail_id = toi.m_product_detail_id
+	LEFT JOIN t_order_header toh ON toi.t_order_header_id = toh.t_order_header_id
 
+WHERE
+	toh.order_status != 99
+	AND mph.delete_flag = 0
+	AND mph.display_flag = 1
+	AND mpd.delete_flag = 0
+	AND toi.delete_flag = 0
+	AND (
+		mph.display_from_date < CURRENT_DATE() 
+		OR (
+			mph.display_from_date = CURRENT_DATE() AND mph.display_from_time <= CURRENT_TIME()
+		)
+	)
+	AND (
+		mph.display_to_date > CURRENT_DATE() OR mph.display_to_time >= CURRENT_TIME()
+	)
+GROUP BY toi.product_cd
+ORDER BY Total DESC
+
+//
+
+$params = [
+    ':customerId' => $customerId,
+];
+
+$query = $this->_em->createQueryBuilder();
+$query->select('mpd.productDetailId',
+    'SUM(CASE WHEN toh.customerId = :customerId THEN toi.productCount ELSE 0 END) AS Total');
+$query->from('KdlEntity\Entity\ProductDetail', 'mpd');
+$query->leftJoin('KdlEntity\Entity\ProductHeader', 'mph', 'WITH', 'mpd.productDetailId = mph.productHeaderId');
+$query->leftJoin('KdlEntity\Entity\OrderItem', 'toi', 'WITH', 'mpd.productDetailId = toi.productDetailId');
+$query->leftJoin('KdlEntity\Entity\OrderHeader', 'toh', 'WITH', 'toi.orderHeaderId= toh.orderHeaderId');
+
+$query->where('mpd.deleteFlag = 0');
+$query->andWhere('mph.deleteFlag = 0');
+$query->andWhere('mph.displayFlag = 1');
+$query->andWhere('toi.deleteFlag = 0');
+$query->andWhere('toh.orderStatus != 99');
+$query->andWhere('mph.displayFromDate < CURRENT_DATE() OR (mph.displayFromDate = CURRENT_DATE() AND mph.displayFromTime <= CURRENT_TIME())');
+$query->andWhere('mph.displayToDate > CURRENT_DATE() OR mph.displayToTime >= CURRENT_TIME()');
+$query->groupBy('toi.productCd');
+$query->orderBy('Total', 'DESC');
+$query->setParameters($params);
+
+return $query->getQuery()->getArrayResult();
 
 
 
