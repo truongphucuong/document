@@ -1,0 +1,26 @@
+Database Schema
+
+	
+	m_product_header
+		+ m_brand_id // relate m_brand - Thương hiệu
+		+ m_label_id // relate m_label - Nhãn
+	
+	t_order_item: // product_count
+	t_order_header //
+		+ m_customer_id
+	
+	r_product_class_detail //
+	m_product_class_detail // Color product
+		+ m_product_class_detail_id
+		+ code // ma mau (カラーコード)
+		+ class_value // mau (カラー)
+		
+		
+	m_brand // thương hiệu ()
+		+ m_brand_id
+		+ brand_code
+		+ brand_name // name
+	m_label // nhãn (レーベル) MEN, WOMEN
+		+ m_label_id
+		+ label_code
+		+ label_name // name

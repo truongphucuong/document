@@ -1,0 +1,21 @@
+
+UserLogin ~ CustomerLogin
+FrontEnd: KdlContent\Front\Login
+	
+	LoginController.php 
+		-> Customer{login, customerPassword}
+		-> call LoginModel
+			function loginUser($Customer)
+				-> call UserAuth ServiceManager (KdlAuth\Service\UserAuth)
+					- function setLoginInfo($Customer->getLogin(), $customer->getCustomerPassword())
+					- Authenticate()
+						-> call KdlAuth\Apdapter\UserAuthAdapter
+							- authenticate()
+								+ call getCustomer($login) // get CustomerRepository
+									call CustomerRepository function getCustomerForLogin()
+								+ call verifyPassword($password, $customer)
+	
+		- module.config
+			'auth' => [
+				'login_property' => 'email' // column find customer when login
+			]

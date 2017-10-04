@@ -1,0 +1,10 @@
+SUM with condition
+
+SELECT ... 
+	SUM(CASE
+		WHEN track_id <= 		[your_value]
+		THEN total_points
+		ELSE 0
+		END
+	) AS total_points
+ 

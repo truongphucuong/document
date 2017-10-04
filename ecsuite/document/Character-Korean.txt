@@ -1,0 +1,22 @@
+
+単価(上代) Đơn giá (Con lai) ~ Đơn phân loại
+
+カラーコード Mã màu
+カラー màu
+順位 Xếp loại
+レーベル Nhãn
+
+納期 Ngày thanh toán ~ delivery_date
+受注日 Ngày nhận ~ ordered_date
+
+品番 Số sản phẩm
+品名 Tên mặt hàng
+
+オーダー数 Số đơn mặt hàng ~ product_count
+
+//
+商品コード Mã sản phẩm ~ product_cd
+
+上代（税抜） Jodo (ko bao gồm trừ thuế) ~ unit_price
+単価（税抜） Đơn giá (đã loại trừ thuế) ~ item_price
+価格（税込） Giá (bao gồm thuế), Đơn phân loại ~ sell_price

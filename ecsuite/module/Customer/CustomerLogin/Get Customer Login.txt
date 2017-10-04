@@ -1,0 +1,9 @@
+Get Customer is Login
+
+$Customer = false;
+$UserAuth = $this->getServiceManager()->get('UserAuth');
+if ($UserAuth->hasIdentity()) {
+	$Customer = $UserAuth->getIdentity();
+	//customer id
+	$CustomerId = $Customer['customerId'];
+}
