@@ -1,0 +1,79 @@
+KdlAjax
+
+Ecsuite\KdlAjax
+
+--------------------
+----------------------------------------
+Step 1: config: config\module.config.php
+//module.config.php
+namespace KdlAjax;
+return [
+	'ajax' => [
+        'pre_template' => 'template',
+        'cd' => [
+			// url api
+            'brand_list_from_exhibition_id' => [
+				// BrandListFromExhibitionId - class process
+                'class' => 'BrandListFromExhibitionId',
+                'param' => [
+					// method is POST with data exhibitionId
+                    'post' => ['exhibitionId'],
+					// using ? method -> liệt kê ra đây
+                ]
+            ],
+			// list ajax
+        ]
+    ],
+	
+];
+-----------------
+----------------------------------------
+Step 2: create 1 class BrandListFromExhibition.php
+KdlAjax\Api\BrandListFromExhibition.php
+
+<?php
+namespace KdlAjax\Api;
+use KdlAjax\Api\AbstractApi;
+
+class BrandListFromExhibition extends AbstractApi
+{
+	protected function indexAction()
+	{
+		// to do something return array response
+		// exam
+		$result = ['success' => false, 'data' => null];
+        $exhibitionId = $this->getParam('exhibitionId');
+        if (empty($exhibitionId)) {
+            return $result;
+        }
+        // 
+        $brandList = $this->getBrandList($exhibitionId);
+        if ($brandList) {
+            $result['success'] = true;
+            $result['data'] = $brandList;
+        }
+        return $result;
+	}
+	// create function model access db
+	private function getBrandList($exhibitionId)
+    {
+        $BrandRepository = $this->getEntity()->getRepository('KdlEntity\\Entity\\Brand');
+        $BrandList = $BrandRepository->getBrandListFromExhibitionId($exhibitionId);
+        if ($BrandList) {
+            return $BrandList;
+        }
+        return false;
+    }
+}
+--------------------
+----------------------------------------
+Step 3: finish
+	Test: example.com/api/brand_list_from_exhibition_id
+
+	
+Note:
+	khi post, get with data
+	because of using getParam method should data
+		get // ok
+		post // form data is raw
+			// Content-Type: application/x-www-form-urlencoded

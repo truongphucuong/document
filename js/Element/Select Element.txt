@@ -1,0 +1,47 @@
+Select Element
+
+var select = document.getElementById("Select");
+
+// add value option
+	Syntax: selectObject.add(option, index)
+	// add last option
+		var option = document.createElement("option");
+	
+		option.value = 1;
+		option.text = "HAHA";
+		// add 
+		select.add(option);
+	// add in position
+		select.add(option, 0)
+	
+// remove
+
+	select.remvoe(1);
+	// remove all
+		// because of when remove => length is changed
+		while ( brand.length > 0) {
+            brand.remove(0);
+        }
+	// remove all but first option
+		while ( brand.length >= 2) {
+            brand.remove(1);
+        }
+
+// get option length
+	if (select.length > 0) {
+		// todo
+	}
+// get index selected
+	select.selectedIndex
+	
+// Event
+	//change
+	// On change when value is changed
+		select.addEventListener("change", function(){
+			//to do something
+			// alert(this.value)
+		});
+		// or
+		object.onchange = function(){
+		
+		};

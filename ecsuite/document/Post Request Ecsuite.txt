@@ -1,0 +1,29 @@
+
+
+// 
+		var request = new XMLHttpRequest();
+        request.open('POST', '/api/brand_list_from_exhibition_id', true);
+        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        request.onload = function() {
+            if (request.status >= 200 && request.status < 400) {
+                var result = JSON.parse(request.responseText);
+                if (result.success) {
+                    var i = 0;
+                    while(i < result.data.length) {
+                        var option = document.createElement("option");
+                        option.value = result.data[i]["brandId"];
+                        option.text = result.data[i]["brandName"];
+                        brand.add(option);
+                        i++;
+                    }
+                } 
+            } else {
+//                console.log("error");
+            }
+        };
+        request.onerror = function() {
+            console.log('Error');
+        };
+        // set data
+        var data = 'exhibitionId=' + id;
+        request.send(data);

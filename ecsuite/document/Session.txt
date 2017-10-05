@@ -1,0 +1,13 @@
+Session
+
+//AbstractApiPaginator
+
+// Set
+	const SEARCH_SESSION_KEY = 'KdlAdminAjax\\Api\\Admin\\AlbumList';
+	$this->setObjectToSession(self::SEARCH_SESSION_KEY, $this->request->getPost());
+
+// get
+	$SearchCondition = $this->getObjectFromSession(get_class(this));
+	
+// clear
+	$this->clearObjectSession(self::SEARCH_SESSION_KEY);

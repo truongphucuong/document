@@ -1,0 +1,11 @@
+UserAuth
+
+$UserAuth = $this->getServiceManager()->get('UserAuth');
+$Customer = false;
+if ($UserAuth->hasIdentity()) {
+	$Customer = $UserAuth->getIdentity();
+}
+// customerId
+$customerId = $Customer['customerId'];
+//$Customer['nameSei']
+//$Customer['nameMei']
