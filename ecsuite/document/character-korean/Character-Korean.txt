@@ -20,11 +20,18 @@
 上代（税抜） Jodo (ko bao gồm trừ thuế) ~ unit_price
 単価（税抜） Đơn giá (đã loại trừ thuế) ~ item_price
 価格（税込） Giá (bao gồm thuế) ~ sell_price
-
+選択してください Vui lòng chọn
 //
 展示会名 Tên triển lãm exhibition_name
 //
 条件 Điều kiện
+ランキング種別 Loại xếp hạng
+アイテム Mục ~ Category
+納期 - Ngày thanh toán
+年 - Năm
+月 - Tháng
+
+検索 - Tìm kiếm
 
 // Page
 マイページ Trang của tôi mypageư

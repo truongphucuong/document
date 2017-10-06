@@ -65,8 +65,8 @@
 	$query->orWhere("mpc.parentCategoryId IN ({$catParams})");
 	
 	//set Parameter
-	$query->where('ph.deleteFlag = 0 AND ph.productHeaderId != :productHeaderId AND ph.productCd = :productCd 		AND ph.brandId = :brandId');
-	$query->setParameters([':productHeaderId' => $productId, ':productCd' => $productCd, ':brandId' => 		$brandId]);
+	$query->where('ph.deleteFlag = 0 AND ph.productHeaderId != :productHeaderId AND ph.productCd = :productCd 				AND ph.brandId = :brandId');
+	$query->setParameters([':productHeaderId' => $productId, ':productCd' => $productCd, ':brandId' => 				$brandId]);
 	
 	// Group By
 	$query->groupBy('mc.customerId');
@@ -232,3 +232,21 @@ if ($property && $value) {
                 return $Customer;
             }
         }
+
+// SQL thuan
+		$Connection = $this->_em->getConnection();
+        $sql = '
+            SELECT 
+                mph.m_product_header_id,
+                SUM(toi.product_count) AS productCount
+            FROM m_product_header mph
+            LEFT JOIN t_order_item toi ON toi.m_product_header_id = mph.m_product_header_id
+            LEFT JOIN t_order_header toh ON toh.t_order_header_id = toi.t_order_header_id
+            WHERE m_product_header_id IN ( :productHeaderId )
+                AND toh.m_customer_id = :customerId
+        ';
+        $Statment = $Connection->prepare($sql);
+        $Statment->bindValue(':customerId', $customerId);
+        $Statment->bindValue(':productHeaderId', implode(',', $productHeaderId));
+        $Statment->execute();
+        return $Statment->fetchAll(PDO::FETCH_COLUMN);

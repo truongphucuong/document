@@ -1,0 +1,5 @@
+Session Name App
+//Selecbox header exhibitionId and brandId
+$container = new Container('HeaderSelectBoxData');
+$container->item['exhibitionId']
+$container->item['brandId']

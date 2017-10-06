@@ -1,0 +1,10 @@
+KdlApi\Application\Api;
+
+Api::getServer('HTTP_USER_AGENT')
+Api::getModuleConfig(__NAMESPACE__)
+Api::isHttps()
+
+Api::get()->setcookie($secureSessionKeyRev, 1, null, '/', $module_config['ConfigOption']['cookie_domain']);
+
+Api::get()->setcookie($sessionKey, null, time() - 3600);
+Api::get()->setcookie(strrev($secureSessionKey), 1);

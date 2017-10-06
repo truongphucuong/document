@@ -1,0 +1,11 @@
+KdlAjax\Api\AbstractApi
+
+// tuong tu:
+	$this->getEntity()->getRepository('KdlEntity\\Entity\\Brand')->getBrandListFromExhibitionId($exhibitionId);
+	// or
+
+	$this->getEntity('Brand')->getBrandListFromExhibitionId($exhibitionId);
+// get param
+$exhibitionId = $this->getParam('exhibitionId');
+
+        

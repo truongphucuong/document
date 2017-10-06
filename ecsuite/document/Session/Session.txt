@@ -11,3 +11,14 @@ Session
 	
 // clear
 	$this->clearObjectSession(self::SEARCH_SESSION_KEY);
+	
+//
+use Zend\Session\Container;
+
+$container = new Container($name);
+$container = new Container('namespace');
+// add
+$container->item = 'foo';
+
+// get
+var_dump($container->item);
