@@ -1,6 +1,13 @@
 BaseModel
 KdlEntity\Model\BaseModel
 
+
+create
+	//with param is ServiceManager
+	$Album = new AlbumModel($$this->getServiceManager());
+	
+	
+
 // get entity service
 	$entityService = $this->getServiceManager()->get('EntityService');
 	

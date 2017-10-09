@@ -1,5 +1,7 @@
 Session Name App
 //Selecbox header exhibitionId and brandId
+use Zend\Session\Container;
+
 $container = new Container('HeaderSelectBoxData');
 $container->item['exhibitionId']
 $container->item['brandId']
