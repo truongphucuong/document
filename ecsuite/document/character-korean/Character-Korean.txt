@@ -1,10 +1,10 @@
-
+﻿
 単価(上代) Đơn giá (Con lai) ~ Đơn phân loại
 
 カラーコード Mã màu
 カラー màu
-順位 Xếp loại
-レーベル Nhãn
+順位 Xếp loại - ranking
+レーベル Nhãn - label
 
 納期 Ngày thanh toán ~ delivery_date
 受注日 Ngày nhận ~ ordered_date
@@ -27,12 +27,12 @@
 条件 Điều kiện
 ランキング種別 Loại xếp hạng
 アイテム Mục ~ Category
-納期 - Ngày thanh toán
+納期 - Ngày thanh toán - delivery_date
 年 - Năm
 月 - Tháng
 
 検索 - Tìm kiếm
 
 // Page
-マイページ Trang của tôi mypageư
+マイページ Trang của tôi mypage
 お問い合わせ Liên hệ - inquiry

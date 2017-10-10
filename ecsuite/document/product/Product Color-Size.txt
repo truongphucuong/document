@@ -1,0 +1,104 @@
+Product Color-Size
+
+Position
+	- Color-Size in table m_product_class_detail
+		> m_product_class_header_id: mã qui định là size hay color
+		> code: mã color | size
+		> className: name
+		> classValue:
+	- Color-Size cũng có ở colum product_class_info of t_order_item
+
+Cách lấy:
+	- Lấy theo bảng- SubSelect => error with color
+		> from m_product_header rồi LEFT JOIN m_product_detail
+		> tới r_product_class_detail (chứa m_product_detail_id), tới m_product_class_detail
+		> nhưng 1 r_product_class_detail sẽ có 2 m_product_class_detail
+			* 2 row thì 1 row chứa thông tin size, và 1 row chứa thông tin color
+		> Example code:
+			Select mph.m_product_header_id,
+				(
+					Select mpcd.code
+					from r_product_class_detail rpcd 
+					left join m_product_class_detail mpcd
+						ON mpcd.m_product_class_detail_id = rpcd.m_product_class_detail_id
+					where rpcd.m_product_detail_id = mpd.m_product_detail_id
+					AND mpcd.m_product_class_header_id = 2002
+				) AS colorCode,
+				(
+					Select mpcd.code
+					from r_product_class_detail rpcd 
+					left join m_product_class_detail mpcd
+						ON mpcd.m_product_class_detail_id = rpcd.m_product_class_detail_id
+					where rpcd.m_product_detail_id = mpd.m_product_detail_id
+					AND mpcd.m_product_class_header_id = 2003
+				) AS sizeCode
+			from m_product_header mph
+			Left join m_product_detail mpd
+				ON mpd.m_product_header_id = mph.m_product_header_id
+		> Note:
+			Sử dụng SubSelect không thể select hơn quá 1 column, nên chỉ có thể lấy được 1 column ==> ko ổn
+			
+			
+	- Lấy theo bảng - JOIN => OK
+		- Note: mã color 2002, size 2003 ko đc gán trực tiếp
+		// phải lấy từ Ecsuite\config\module.config.module#product_class_header_id
+		// $configProductClassDetail = $this->getServiceManager()->get('Configuration')['product_class_header_id'];
+		Select mph.m_product_header_id,
+			color.code,
+			size.code
+		from m_product_header mph
+		Left join m_product_detail mpd
+			ON mpd.m_product_header_id = mph.m_product_header_id
+	
+		LEFT JOIN ( 
+			SELECT rpcd.m_product_detail_id, mpcd.code, mpcd.class_value 
+			FROM r_product_class_detail rpcd 
+			INNER JOIN m_product_class_detail mpcd
+				ON mpcd.m_product_class_detail_id = rpcd.m_product_class_detail_id 
+				AND mpcd.delete_flag = 0 
+				AND mpcd.m_product_class_header_id = 2002 
+		) color ON color.m_product_detail_id = mpd.m_product_detail_id
+		LEFT JOIN ( 
+			SELECT rpcd.m_product_detail_id, mpcd.code, mpcd.class_value 
+			FROM r_product_class_detail rpcd 
+			INNER JOIN m_product_class_detail mpcd
+				ON mpcd.m_product_class_detail_id = rpcd.m_product_class_detail_id 
+				AND mpcd.delete_flag = 0 
+				AND mpcd.m_product_class_header_id = 2003 
+			) size ON color.m_product_detail_id = mpd.m_product_detail_id
+			
+			
+			
+	- Lấy theo column product_class_info of t_order_item => Very good
+		> dữ liệu product_class_info là json, nên cần decode trước khi dùng
+		> Đã lấy được product_class_info
+		> Ex:
+			// get config product_class_detail of Module config Ecsuite
+			// config chứa mã quy định là color hay size (m_product_class_header_id) 
+			// 'product_class_header_id' => [
+					'color' => 2002,
+					'size' => 2003
+				]
+			$configProductClassDetail = $this->getServiceManager()->get('Configuration')['product_class_header_id'];
+			
+			//get color
+			// decode json
+			// ex array: 
+				array(
+					2002 => [
+						'code' => '',
+						'classValue' => '',
+						'className' => ''
+					]
+					2003 => [
+						'code' => '',
+						'classValue' => '',
+						'className' => ''
+					]
+				)
+			$decode = json_decode($product['productClassInfo'], true);
+			
+			$colorCode = $decode[$configProductClassDetail['color']]['code']; // color code
+			$colorClassValue = $decode[$configProductClassDetail['color']]['code']; // color class value
+			// tương tự cho size
+			$sizeCode = $decode[$configProductClassDetail['size']]['code']; // size code

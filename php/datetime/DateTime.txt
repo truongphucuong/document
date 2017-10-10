@@ -1,0 +1,30 @@
+DateTime class
+
+// create
+	$date = new DateTime(); // now
+
+	// return false if create don't success. There check $date before get format
+	$date = DateTime::createFromFormat('Y-m-d', '2017-10-01');
+	if ($date) {
+		echo $date->format('Y-m-d'); // 2017-10-01
+	}
+	
+	// In createFromFormat: format đầy đủ: Y-m-d H:m:s
+	// nếu chỉ truyền cho mỗi "Y" không thì mặc nhiên nó sẽ lấy thêm datetime hiện tại
+	$dateNew = DateTime::createFromFormat('Y', '2017');
+	if ($dateNew) {
+		echo $dateNew->format('Y-m-d'); // 2017-10-01 // datetime now được thêm vào
+	}
+
+// get
+	// full
+	$full = $date->format('Y-m-d'); // 2017-10-01
+	// year
+	$year = $date->format('Y'); // 2017
+	// month
+	$month = $date->format('m'); // 10
+	// day
+	$day = $date->format('d'); // 01
+// compare 
+
+

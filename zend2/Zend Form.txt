@@ -30,15 +30,14 @@ $this->addElement('select', $name, array(
         ));
 
 
-//
-Cannot use 'Int' as class name as it is reserved
-Loi xay ra dv PHP 7
-\String
-\Int
-\Bool
-\Float
-->change 
-\Field(type="string")
-\Field(type="int")
-\Field(type="bool")
-\Field(type="float")
+// Cannot use 'Int' as class name as it is reserved
+	Loi xay ra dv PHP 7
+	\String
+	\Int
+	\Bool
+	\Float
+	->change 
+	\Field(type="string")
+	\Field(type="int")
+	\Field(type="bool")
+	\Field(type="float")

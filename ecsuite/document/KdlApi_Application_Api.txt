@@ -8,3 +8,6 @@ Api::get()->setcookie($secureSessionKeyRev, 1, null, '/', $module_config['Config
 
 Api::get()->setcookie($sessionKey, null, time() - 3600);
 Api::get()->setcookie(strrev($secureSessionKey), 1);
+// get date now
+	$nowDate = Api::get()->getDate(); //2017-10-01
+	$nowTime = Api::get()->getTime(); //11:22:33

@@ -1,22 +1,32 @@
-Database Schema
+﻿Database Schema
 
 	
 	m_product_header
 		+ m_brand_id // relate m_brand - Thương hiệu
 		+ m_label_id // relate m_label - Nhãn
 	
-	t_order_item: // product_count
+	m_product_detail
+		+ m_product_header_id
+	
+	t_order_item: // đơn đặt hàng
+		+ m_product_header_id
+		+ m_peodu_detail_id
+		+ product_count
+		+ product_class_info: JSON contain corlor and size
+		
 	t_order_header //
 		+ m_customer_id
 	
-	r_product_class_detail //
+	r_product_class_detail 
+	// 1 r_product_class_detail => 2 m_product_class_detail
 	m_product_class_detail // Color product
-		+ m_product_class_detail_id
+		+ m_product_class_detail_id // id
+		+ m_product_class_header // mã qui định là màu hay size
 		+ code // ma mau (カラーコード)
 		+ class_value // mau (カラー)
 		
 		
-	m_brand // thương hiệu ()
+	m_brand // thương hiệu (ブランド選択)
 		+ m_brand_id
 		+ brand_code
 		+ brand_name // name
@@ -24,3 +34,10 @@ Database Schema
 		+ m_label_id
 		+ label_code
 		+ label_name // name
+	
+	m_exhibition // Sự kiện (イベント選択)
+		exhibition_name
+		exhibition_div
+	r_exhibition_b2b_cu
+		m_customer_id
+		m_exhibition_id

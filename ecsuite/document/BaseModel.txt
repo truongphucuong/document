@@ -1,15 +1,20 @@
 BaseModel
+
 KdlEntity\Model\BaseModel
 
 
 create
+	// 
 	//with param is ServiceManager
-	$Album = new AlbumModel($$this->getServiceManager());
+	$Album = new AlbumModel($this->getServiceManager());
 	
 	
 
 // get entity service
 	$entityService = $this->getServiceManager()->get('EntityService');
+
+// Get repository of Entity
+	$result =  $this->getEntity('ProductHeader')->getProductCountRanking($params, $maxResult);
 	
 // create new Artist Entity empty
 	$artist = $entityService->getNewEntity('Artist');

@@ -1,5 +1,14 @@
 
 Fieldset
+//
+			'albumId' => [
+                'type' => 'Zend\\Form\\Element\\Text',
+                'name' => 'albumId',
+                'specification' => [
+                    'required' => false
+                ]
+            ],
+
 
 //with database, select
 ex artistId
@@ -10,7 +19,6 @@ ex artistId
                     'label' => 'artistId',
                     'empty_option' => 'please select',
                     'object_manager' => $this->getObjectManager(),
-					//entity
                     'target_class' => 'KdlEntity\\Entity\\Artist',
                     'property' => 'name',
                     'is_method' => true,
@@ -18,15 +26,125 @@ ex artistId
                         'name' => 'findBy',
                         'params' => [
                             'criteria' => [
-								//where condition
-                                'deleteFlag' => 0
+                                'deleteFlag' => Artist::getConfigValue('deleteFlag', 'DELETE_FLAG_OFF')
                             ],
                         ]
                     ]
                 ],
                 'attributes' => [],
                 'specification' => [
-					//required
                     'required' => true
+                ]
+            ],
+
+// textarea 
+	
+	// description: not require, max-length 256 character
+			'description' => [
+                'type' => 'Zend\\Form\\Element\\Textarea',
+                'name' => 'description',
+                'options' => [
+                    'label' => 'description'
+                ],
+                'attributes' => [
+                    'class' => 'tinymce'
+                ],
+                'specification' => [
+                    'required' => false,
+                    'filters' => [
+                        [
+                            'name' => 'Zend\\Filter\\StringTrim'
+                        ]
+                    ],
+                    'validators' => [
+                        'MachineDependent' => [
+                            'name' => 'KdlValidator\\Validator\\MachineDependent'
+                        ],
+                        'StringLength' => [
+                            'name' => 'StringLength',
+                            'options' => [
+                                'encoding' => 'UTF-8',
+                                'max' => 256
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+
+// radio inline
+			'activeFlag' => [
+                'type' => 'Zend\\Form\\Element\\Radio',
+                'name' => 'activeFlag',
+                'options' => [
+                    'label' => 'activeFlag',
+                    'label_attributes' => [
+                        'class' => 'radio inline'
+                    ]
+                ],
+                'attributes' => [],
+                'specification' => [
+                    'required' => true
+                ]
+            ]
+// title unique key
+			'title' => [
+                'type' => 'Zend\\Form\\Element\\Text',
+                'name' => 'title',
+                'options' => [
+                    'label' => 'title'
+                ],
+                'specification' => [
+                    'required' => true,
+                    'filters' => [
+                        [
+                            'name' => 'Zend\\Filter\\StringTrim'
+                        ]
+                    ],
+                    'validators' => [
+                        'MachineDependent' => [
+                            'name' => 'KdlValidator\\Validator\\MachineDependent'
+                        ],
+                        'StringLength' => [
+                            'name' => 'StringLength',
+                            'options' => [
+                                'encoding' => 'UTF-8',
+                                'max' => 50
+                            ]
+                        ],
+                        'DbRecordExists' => [
+                            'name' => 'KdlValidator\\Validator\\DbRecordExists',
+                            'options' => [
+                                'entityName' => 'Album',
+                                'fieldName' => 'title',
+                                'id' => $this->albumId
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+			
+// Checkbox
+	
+	
+	// MultiCheckbox
+			'artistId' => [
+                'type' => 'DoctrineModule\\Form\\Element\\ObjectMultiCheckbox',
+                'name' => 'artistId',
+                'options' => [
+                    'label' => 'artistId',
+                    'label_attributes' => [
+                        'class' => 'checkbox inline'
+                    ],
+                    'empty_option' => 'please select',
+                    'object_manager' => $this->getObjectManager(),
+                    'target_class' => 'KdlEntity\\Entity\\Artist',
+                    'property' => 'name',
+                    'is_method' => true,
+                    'find_method' => [
+                        'name' => 'findAll'
+                    ]
+                ],
+                'specification' => [
+                    'required' => false
                 ]
             ],

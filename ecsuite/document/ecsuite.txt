@@ -7,6 +7,9 @@
 <?= $this->url($this->route, ['page_url' => 'album_register', 'method' => 'index'], [], true); ?>
 <?php echo $this->url($this->route, ['page_url' => 'artist_edit', 'method' => 'index', 'id' => $val->getArtistId()], [], true); ?>
 
+//get config module
+$configProductClassDetail = $this->getServiceManager()->get('Configuration')['product_class_header_id'];
+
 
 //some errors
 --Zend\Form\Exception\InvalidElementException
