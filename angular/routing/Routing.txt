@@ -1,0 +1,30 @@
+Routing
+
+// config dir route
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+	// home index
+	{
+		path: '',
+		component: IndexConponent
+	},
+	// use routing child module
+	// 
+	{
+		path: 'user',
+		loadChildren: './user/user.module#UserModule'
+	},
+	// redirect from home to login
+	{
+		path: '',
+		redirecTo: 'login'
+	}
+	// otherwise redirect to home
+	{
+		path: '**',
+		redirecTo: '' // home
+	}
+	// canActive
+
+];

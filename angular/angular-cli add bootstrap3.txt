@@ -1,0 +1,13 @@
+
+$ npm install --save bootstrap@3
+$ npm install –save jquery@1.12.0
+Access file .angular-cli.json
+"styles": [
+        "styles.css",
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+      ],
+ "scripts": [
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.min.js"
+
+      ],	

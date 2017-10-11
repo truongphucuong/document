@@ -1,0 +1,47 @@
+Built Tree example for Select
+<?php 
+$arr = [
+['productCategoryId' => 1, 'categoryName' => 'root', 'parentCategoryId' => ''],
+['productCategoryId' => 2, 'categoryName' => 'mon an', 'parentCategoryId' => 1],
+['productCategoryId' => 3, 'categoryName' => 'pho', 'parentCategoryId' => 2],
+['productCategoryId' => 4, 'categoryName' => 'bun', 'parentCategoryId' => 2],
+['productCategoryId' => 5, 'categoryName' => 'sinh to', 'parentCategoryId' => 1],
+['productCategoryId' => 6, 'categoryName' => 'dau', 'parentCategoryId' => 5],
+['productCategoryId' => 7, 'categoryName' => 'nho', 'parentCategoryId' => 5],
+['productCategoryId' => 8, 'categoryName' => 'pho mang', 'parentCategoryId' => 3]
+];
+$result = [];
+function builtCategoryTree($arr, $parent)
+{
+	$tree = [];
+	foreach ($arr as $key) {
+		if ($key['parentCategoryId'] == $parent) {
+            $children = builtCategoryTree($arr, $key['productCategoryId']);
+            // set a trivial key
+            if (!empty($children)) {
+                $key['children'] = $children;
+            }
+            $tree[] = $key;
+        }
+	}
+	return $tree;
+}
+echo '<pre>';
+print_r(builtCategoryTree($arr, 1));
+echo '</pre>';
+function printCategoryTree($tree, $level = 0, $parent = '') {
+    foreach ($tree as $i => $t) {
+        $dash = ($t['parentCategoryId'] == '') ? '' : str_repeat('-', $level) .' ';
+        printf("\t<option value='%d'>%s%s</option>\n", $t['productCategoryId'], $dash, $t['categoryName']);
+        if ($t['parentCategoryId'] == $parent) {
+            // reset $level
+            $level = 0;
+        }
+        if (isset($t['children'])) {
+            printCategoryTree($t['children'], ++$level, $t['parentCategoryId']);
+        }
+    }
+}
+echo '<select>';
+printCategoryTree(builtCategoryTree($arr, ''));
+echo '</select>';

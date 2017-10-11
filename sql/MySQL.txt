@@ -1,0 +1,16 @@
+SQL
+
+SELECT *
+FROM table1 a
+	LEFT_JOIN table2 b ON a.id = b.id
+WHERE id = 1
+GROUP BY a.id
+ORDER BY a.id DESC
+
+// Insert
+INSERT INTO table_name(column_1, column_2) VALUES ('1', '2')
+
+// ORDER BY
+	- DESC: giam dan
+	- ASC: tang dan
+LIMIT

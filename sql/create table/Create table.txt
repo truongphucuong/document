@@ -1,0 +1,12 @@
+Create table
+
+CREATE TABLE table_name(
+	id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+	name VARCHAR(50) NOT NULL,
+	title VARCHAR(50) NOT NULL DEFAULT "haha",
+	user_id INTEGER UNSIGNED NOT NULL,
+	// primary key
+	PRIMARY KEY (id),
+	// foreign key
+	FOREIGN KEY(user_id) REFERENCES users(id)
+);

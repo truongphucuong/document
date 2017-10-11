@@ -1,0 +1,24 @@
+Angular with socket.io
+Install socket: $ npm install socket.io-client –save
+
+import * as io from 'socket.io-client';
+
+export class MessagesComponent implements OnInit{
+    // socket
+    socket: any; 
+
+    send(message: string): void {
+        if (message) {
+            this.socket.emit('new-message', {name: this.username, message: message});
+        } 
+    }
+
+    // init
+    ngOnInit(): void {
+        this.socket = io.connect('http://172.16.160.169:8080');
+        // on new message
+        this.socket.on('new-message', function (data: Message) {
+            this.messages.push(data);
+        }.bind(this));
+    }
+}

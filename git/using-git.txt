@@ -49,3 +49,6 @@ Git command
 
 // rename folder
 	$ git mv [old-folder-name] [new-folder-name]
+
+// move folder
+	$ git [folder] [path-folder-new]
