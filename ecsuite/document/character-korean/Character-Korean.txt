@@ -3,12 +3,17 @@
 
 カラーコード Mã màu
 カラー màu
+サイズコード - Ma Size
+サイズ	- Size
 順位 Xếp loại - ranking
 レーベル Nhãn - label
+アイテム - Mục - category - ProductCategoryIdList
+イベント - Sự kiện - Exhibition
+ブランド - Thương hiệu - Brand
 
 納期 Ngày thanh toán ~ delivery_date
 受注日 Ngày nhận ~ ordered_date
-
+ご注文日 ~ Ngày đặt hàng ordered_date
 品番 Số sản phẩm
 品名 Tên mặt hàng
 
@@ -36,3 +41,5 @@
 // Page
 マイページ Trang của tôi mypage
 お問い合わせ Liên hệ - inquiry
+//
+該当する情報がありません。 - Không có thông tin phù hợp.
