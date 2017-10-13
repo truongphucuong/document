@@ -11,7 +11,7 @@
 イベント - Sự kiện - Exhibition
 ブランド - Thương hiệu - Brand
 
-納期 Ngày thanh toán ~ delivery_date
+納期 Ngày thanh toán, ngày hết hạn ~ delivery_date
 受注日 Ngày nhận ~ ordered_date
 ご注文日 ~ Ngày đặt hàng ordered_date
 品番 Số sản phẩm
@@ -22,8 +22,8 @@
 //
 商品コード Mã sản phẩm ~ product_cd
 
-上代（税抜） Jodo (ko bao gồm trừ thuế) ~ unit_price
-単価（税抜） Đơn giá (đã loại trừ thuế) ~ item_price
+上代（税抜） Jodo (ko bao gồm trừ thuế) ~ item_price
+単価（税抜 Đơn giá (không bao gồm thuế) ~ unit_price
 価格（税込） Giá (bao gồm thuế) ~ sell_price
 選択してください Vui lòng chọn
 //
@@ -37,9 +37,97 @@
 月 - Tháng
 
 検索 - Tìm kiếm
-
+掛率(%) ~ wholesale_retail_ratio of toi
 // Page
 マイページ Trang của tôi mypage
 お問い合わせ Liên hệ - inquiry
 //
 該当する情報がありません。 - Không có thông tin phù hợp.
+
+script src="//code.highcharts.com/highcharts.js"></script>
+<section id="myPageAnalysisChart" class="flex flexType01 flexType02">
+    <h3 class="hidden">発注分析グラフ</h3>
+    <!--表示テスト用ここから-->
+    <script type="text/javascript">
+        $(function() {
+            Highcharts.chart('analysisChart01', {
+                chart: {
+                    type: 'pie'
+                },
+                colors: ['#4F81BD', '#92D050', '#F79646'],
+                legend: {
+                    title: {
+                        text: '(表示テスト用)<br>アイテム構成比',
+                        style: {
+                            fontFamily: 'Noto Sans Japanese',
+                            fontSize: '12px'
+                        }
+                    },
+                    labelFormat: '{name}　<span style="font-size:11px";>{price}</span>　<b>{y}%</b>',
+                    align: 'left',
+                    verticalAlign: 'middle',
+                    layout: 'vertical',
+                    symbolWidth: 12,
+                    symbolHeight: 12,
+                    symbolRadius: 0,
+                    itemMarginTop: 3,
+                    itemMarginBottom: 3,
+                    itemStyle: {
+                        fontFamily: 'Noto Sans Japanese',
+                        fontWeight: 'normal'
+                    }
+                },
+                title: {
+                    text: 'アイテム構成比',
+                    align: 'left',
+                    style: {
+                        display: 'none'
+                    }
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                        name: 'アイテム構成比',
+                        data: [{
+                                name: 'トップス',
+                                y: 10,
+                                price: '￥135,000'
+                            }, {
+                                name: 'ボトム',
+                                y: 45,
+                                price: '￥350,000'
+                            }, {
+                                name: 'Tシャツ',
+                                y: 45,
+                                price: '￥470,000'
+                            }]
+                    }]
+            });
+        });
+    </script>
+    <!--表示テスト用ここまで-->
+    <div id="analysisChart01">
+        <!--/analysisChart01--></div>
+    <div id="analysisChart02">
+        #坊奥さまへ<br>
+        #Highcharts、検索したらこれが出てきたので、とりあえずheadで「//code.highcharts.com/highcharts.js」読み込んでます。これじゃなかったらすみません。<br>
+        #この4つのグラフのところ、各W500*H200で枠だけとっておきます。
+        <!--/analysisChart02--></div>
+    <div id="analysisChart03">
+        #W500*H200で枠だけとっておきます。
+        <!--/analysisChart03--></div>
+    <div id="analysisChart04">
+        #W500*H200で枠だけとっておきます。
+        <!--/analysisChart04--></div>
+    <!--/myPageAnalysisChart--></section>

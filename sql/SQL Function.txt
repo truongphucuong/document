@@ -14,4 +14,5 @@ https://www.w3resource.com/mysql/date-and-time-functions/mysql-dayname-function.
 	CURRENT_TIME()
 	// account that do not actived after 3 days
 	signup <= CURRENT_DATE() - INTERVAL 3 DAY
-	
+// Format date
+	DATE_FORMAT(toi.delivery_date, '%Y年%c月') // 2017-10-2 -> 2017年10月

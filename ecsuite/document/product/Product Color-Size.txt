@@ -65,7 +65,7 @@ Cách lấy:
 				ON mpcd.m_product_class_detail_id = rpcd.m_product_class_detail_id 
 				AND mpcd.delete_flag = 0 
 				AND mpcd.m_product_class_header_id = 2003 
-			) size ON color.m_product_detail_id = mpd.m_product_detail_id
+			) size ON size.m_product_detail_id = mpd.m_product_detail_id
 			
 			
 			
