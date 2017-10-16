@@ -1,0 +1,9 @@
+params
+
+// if not exist -> return null
+	$page = $this->params()->fromQuery('page');
+// set default data if not exist
+	$page = $this->params()->fromPost('page', 1);
+
+	//
+$this->params()->fromRoute('slug');

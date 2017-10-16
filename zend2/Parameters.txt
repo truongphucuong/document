@@ -1,0 +1,15 @@
+Parameters
+Zend \Stdlib \Parameters
+
+//
+$parameter = new Parameters()
+
+// get()
+// set()
+// append()
+
+// fromArray()
+
+// toString()
+
+// toArray()

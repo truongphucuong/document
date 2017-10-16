@@ -60,7 +60,7 @@
 	$catParams = implode(',', $categoryParam);
 	$query->where("mpc.productCategoryId IN ({$catParams})");
 	// and where
-	$query->AndWhere($this->abbr . '.customerStatus IN ( ' . implode(',', $customerStatusList) . ' )');
+	$query->andWhere($this->abbr . '.customerStatus IN ( ' . implode(',', $customerStatusList) . ' )');
 	// or where
 	$query->orWhere("mpc.parentCategoryId IN ({$catParams})");
 	

@@ -102,3 +102,30 @@ Cách lấy:
 			$colorClassValue = $decode[$configProductClassDetail['color']]['code']; // color class value
 			// tương tự cho size
 			$sizeCode = $decode[$configProductClassDetail['size']]['code']; // size code
+
+			
+			
+Example
+	// select
+	color.code AS colorCode,
+    color.class_value AS colorClassValue,
+    size.code AS sizeCode,
+    size.class_value AS sizeClassValue,
+		
+	//
+	LEFT JOIN ( 
+                SELECT rpcd.m_product_detail_id, mpcd.code, mpcd.class_value 
+                FROM r_product_class_detail rpcd 
+		INNER JOIN m_product_class_detail mpcd
+                    ON mpcd.m_product_class_detail_id = rpcd.m_product_class_detail_id 
+                    AND mpcd.delete_flag = 0 
+                    AND mpcd.m_product_class_header_id = :color 
+            ) color ON color.m_product_detail_id = mpd.m_product_detail_id
+            LEFT JOIN ( 
+                SELECT rpcd.m_product_detail_id, mpcd.code, mpcd.class_value 
+                FROM r_product_class_detail rpcd 
+                INNER JOIN m_product_class_detail mpcd
+                    ON mpcd.m_product_class_detail_id = rpcd.m_product_class_detail_id 
+                    AND mpcd.delete_flag = 0 
+                    AND mpcd.m_product_class_header_id = :size 
+            ) size ON size.m_product_detail_id = toi.m_product_detail_id

@@ -1,0 +1,4 @@
+Character
+
+&larr; ←
+&rarr; →

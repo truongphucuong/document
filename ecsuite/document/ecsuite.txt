@@ -10,6 +10,11 @@
 //get config module
 $configProductClassDetail = $this->getServiceManager()->get('Configuration')['product_class_header_id'];
 
+// get cache (KdlAjax\Api\AbstractApiPaginator)
+ $cacheMemory = $this->getServiceManager()->get('CacheMemory');
+ $cacheMemory->setItem('AlbumList', $data);
+
+
 
 //some errors
 --Zend\Form\Exception\InvalidElementException

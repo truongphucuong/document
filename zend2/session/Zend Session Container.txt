@@ -1,0 +1,25 @@
+Zend Session Container
+//
+use Zend\Session\Container;
+
+$container = new Container($name);
+$container = new Container('namespace');
+// add
+$container->item = 'foo';
+
+// get
+var_dump($container->item);
+
+// get
+$email = $session_user->offsetGet('email');
+
+// set
+$session_user->offsetSet('username', 'abcd');
+
+// clear one ..
+$sessionUser = new Container('user');
+$sessionUser->getManager()->getStorage()->clear('user);
+
+// clear all session application
+$sessionUser = new Container('user');
+$sessionUser->getManager()->getStorage()->clear();
