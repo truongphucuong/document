@@ -36,6 +36,9 @@ $configProductClassDetail = $this->getServiceManager()->get('Configuration')['pr
 	fix: sai tên hàm change -> findOneBy...
 
 	
+	$param['ImportSearch']['fileType'] = Import::getConfigValue('fileType', 'FILE_TYPE_PRODUCT');
+            $param['ImportSearch']['perPage'] = $this->getServiceManager()->get('Configuration')['KdlAdminPage']['perPageOptions']['product_import_search'];
+	
 -- admin ajax
 	1 -- このモジュール import_albumがありません。configファイルに追加してください。
 		Loi do chua dk config trong KdlAdminAjax\config\module.config.php

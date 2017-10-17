@@ -11,3 +11,5 @@ $logger = $this->getServiceManager()->get('RestfulApiLogger');
 // getAdminAuth : KdlAminAuth\Service\AdminAuth
 $adminAuth = $this->getServiceManager()->get('AdminAuth');
 
+// translator
+$this->Translator = KdlApi\Application\Api::get()->getServiceManager()->get('Translator');

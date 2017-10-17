@@ -27,7 +27,7 @@ create
 
 // note:
 	- table foreign -> remember call foreign
-		$album->setArtist($this->getEntity(Artist')->find($alnum->getArtistId()));
+		$album->setArtist($this->getEntity(Artist')->find($album->getArtistId()));
 	// ...
 	
 

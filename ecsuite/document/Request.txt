@@ -11,6 +11,8 @@ Request
 	$data = $this->request->getPost();
 	// get post and convert to array
 	$dataArray = $this->request->getPost()->toArray();
+// get file
+	$files = $this->request->getFiles();
 	
 // add data to request post
 	$editUrl = $this->url()->fromRoute(null, [

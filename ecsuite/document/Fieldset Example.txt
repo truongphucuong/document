@@ -64,4 +64,33 @@ Select one from database
                     'required' => false
                 ]
             ],
-
+// File
+	$this->fileName => [
+		'type' => 'Zend\\Form\\Element\\File',
+		'name' => $this->fileName,
+		'options' => [
+			'label' => $this->fileName,
+			'input_description' => '登録ボタンを実行すると、取込み処理を開始します。<br />一定時間（30分程度）で更新が完了します。<br />※バックグラウンドで動作しているため、実行後は管理画面を終了しても問題ありません。'
+		],
+		'specification' => [
+			'required' => false,
+			'validators' => [
+				'Extension' => [
+					'name' => 'Zend\\Validator\\File\\Extension',
+					'options' => [
+						'extension' => [
+							'csv',
+							'xlsx',
+							'zip'
+						]
+					]
+				],
+				'FileFormat' => [
+					'name' => 'KdlValidator\\Validator\\FileFormat',
+					'options' => [
+						'format' => 'romaji'
+					]
+				]
+			]
+		]
+	]

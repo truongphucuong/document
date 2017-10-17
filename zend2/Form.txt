@@ -1,0 +1,26 @@
+Form
+
+$form->openTag(['class' => 'bgType01', 'id' => 'orderSheetForm'])
+$form->setAttribute('action', $this->url('event', array('action' => 'add')));
+$form->setAttribute('class', 'form-horizontal');
+$form->prepare();
+// custom attribue
+$form->setAttibute('name', $value);
+//
+$form->setAtributes([])
+
+//
+<?php echo $this->formLabel($form->get('NgayThangNam')); ?>
+<?php echo $this->formInput($form->get('NgayThangNam')); ?>
+<?php echo $this->formTextarea($form->get('GhiChu')); ?>
+<?php echo $this->formSelect($form->get('ID_LPT')); ?>
+
+<?php echo $this->formElementErrors($form->get('NgayThangNam'), array('class' => 'alert-danger')); ?>
+
+
+$form->get('ID_NV')->getValueOptions() // option
+$form->get('ID_NV')->getValue() // value ~ selected
+
+$file = $brandTopImport->get('fileName');
+    $file->setAttributes(['id' => 'orderSheetFile', 'onChange' => "$('#fake_orderSheet_file').val($(this).val())"]);
+    var_dump($file->getMessages());

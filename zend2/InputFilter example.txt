@@ -106,14 +106,14 @@
                         ),
                     ),
                     array (
-                	'name' => 'Regex',
-                	'options' => array(
-                            'pattern'=>'/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/',
-                            'messages' => array(
-                		\Zend\Validator\Regex::NOT_MATCH    => 'Email không h?p l?.',
-                            ),
-                	),
-                	'break_chain_on_failure' => true,
+						'name' => 'Regex',
+						'options' => array(
+								'pattern'=>'/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/',
+								'messages' => array(
+							\Zend\Validator\Regex::NOT_MATCH    => 'Email không h?p l?.',
+								),
+						),
+						'break_chain_on_failure' => true,
                     ),
                 ),
             ));
@@ -217,3 +217,29 @@
               ),
             ),
           ));
+		  
+
+// File
+	$this->fileName => [
+		'type' => 'Zend\\Form\\Element\\File',
+		'name' => $this->fileName,
+		'options' => [
+			'label' => $this->fileName,
+			'input_description' => '登録ボタンを実行すると、取込み処理を開始します。<br />一定時間（30分程度）で更新が完了します。<br />※バックグラウンドで動作しているため、実行後は管理画面を終了しても問題ありません。'
+		],
+		'specification' => [
+			'required' => false,
+			'validators' => [
+				'Extension' => [
+					'name' => 'Zend\\Validator\\File\\Extension',
+					'options' => [
+						'extension' => [
+							'csv',
+							'xlsx',
+							'zip'
+						]
+					]
+				],
+			]
+		]
+	]

@@ -3,5 +3,5 @@ Session Name App
 use Zend\Session\Container;
 
 $container = new Container('HeaderSelectBoxData');
-$container->item['exhibitionId']
-$container->item['brandId']
+$exhibitionId = $container->item['exhibitionId'];
+$brandId = $container->item['brandId'];

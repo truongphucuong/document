@@ -20,7 +20,8 @@
 	if(!$album){
 		return $this->execAction('error');
 	}
-
+// get last insert id
+	$id = $this->EntityManager->getConnection()->lastInsertId();
 //sql
 	$DbConnection = $this->getServiceLocator()->get('EntityManager')->getConnection();
 	$sql = 'SELECT `m_product_detail_id`, `m_product_header_id`, `first_arrival_date`, `first_arrival_time` 		FROM 		`m_product_detail` WHERE `delete_flag` = :delete_flag ORDER BY `m_product_header_id`;';
@@ -161,11 +162,11 @@ return $query->getQuery()->getArrayResult();
 	$this->ServiceManager = Api::get()->getServiceManager();
 	$this->EntityManager = $this->ServiceManager->get('EntityManager');
 	try {
-    		$this->EntityManager->getConnection()->beginTransaction();
+    	$this->EntityManager->getConnection()->beginTransaction();
 		//do some thing
 		$this->EntityManager->flush();
-    		$this->EntityManager->clear();
-    		$this->EntityManager->getConnection()->commit();
+    	$this->EntityManager->clear();
+    	$this->EntityManager->getConnection()->commit();
 	} catch (Exception $exe) {
    		$this->EntityManager->getConnection()->rollback();
    	 	$this->ServiceManager->get('ErrorLogger')->err($exe->getMessage());
