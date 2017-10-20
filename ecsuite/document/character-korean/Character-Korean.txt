@@ -14,9 +14,9 @@
 納期 Ngày thanh toán, ngày hết hạn ~ delivery_date
 受注日 Ngày nhận ~ ordered_date
 ご注文日 ~ Ngày đặt hàng ordered_date
-品番 Số phần ~ product_cd 
+品番, 商品CD Số phần ~ product_cd 
 品名 Tên mặt hàng ~ product_name
-
+CS品番 -> sku
 オーダー数 Số đơn mặt hàng ~ product_count
 
 //

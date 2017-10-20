@@ -1,0 +1,32 @@
+
+// List bake command
+	$ bin/cake bake
+	/*
+	- all
+	- behavior
+	- cell
+	- component
+	- controller
+	- fixture
+	- form
+	- helper
+	- mailer
+	- migration
+	- migration_diff
+	- migration_snapshot
+	- model
+	- plugin
+	- seed
+	- shell
+	- shell_helper
+	- task
+	- template
+	- test
+	
+	*/
+
+Migrations
+// Create migrate
+	// Default: config\Migrations with Name is: YYYYMMDDHHMMSS_[Name].php
+	$bin/cake bake migration [Name]
+	

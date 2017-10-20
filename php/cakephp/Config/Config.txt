@@ -1,0 +1,3 @@
+Config
+
+- edit config/app.default.php to config/app.php

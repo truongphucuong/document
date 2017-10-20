@@ -1,0 +1,9 @@
+Errors
+
+- Fatal error: You must enable the intl extension to use CakePHP. in E:\xampp\htdocs\cms\config\requirements.php on line 31
+	=> Chưa enable extension intl
+		;extension=php_intl.dll
+
+- Uncaught Error: Class 'Cake\Http\Server' not found in E:\xampp\htdocs\cms\webroot\index.php:37 
+	=> Chưa update composer
+	$ composer update
