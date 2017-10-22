@@ -1,0 +1,30 @@
+Some errors
+
+- No provider for Http
+	> add HttpModule
+	import { HttpModule } from '@angular/http';
+	> add imports
+	imports: [
+		//...
+		HttpModule,
+		//....
+	],
+- No provider for Service
+	> Do chưa add provider
+	@Component({
+		//...
+		providers: [
+			AuthService,
+			AppService
+		]
+	})
+- Service
+	> ngOnInit not being called when Injectable class is Instantiated
+		Lifecycle hooks (https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html), like OnInit() work with Directives and Components. They do not work with other types, like a service in your case. From docs:
+
+		A Component has a lifecycle managed by Angular itself. Angular creates it, renders it, creates and renders its children, checks it when its data-bound properties change, and destroys it before removing it from the DOM.
+
+		Directive and component instances have a lifecycle as Angular creates, updates, and destroys them.
+
+	
+	

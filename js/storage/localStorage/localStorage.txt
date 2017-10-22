@@ -1,0 +1,17 @@
+localStorage
+
+// create
+	var localStorage = window.localStorage;
+
+// set
+	localStorage.setItem(name, value);
+
+//get
+	localStorage.getItem(name);
+// has
+	if (localStorage.getItem(name) === undefined) {
+		return false;
+	}
+	return true;
+// remove
+	localStorage.removeItem(name);

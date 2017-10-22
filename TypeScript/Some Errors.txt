@@ -1,0 +1,17 @@
+
+- Can't access object property, even though it exists. Returns undefined
+	/*	
+		console.log(obj) ;
+		console.log(obj.newKey1) ;
+
+		// returned in console
+		> Object { origKey1: "blah", origKey2: "blah blah"} [i]
+			origKey1: "blah"
+			origKey2: "blah blah"
+			newKey1: "this info"
+			newKey2: "that info"
+			newKey3: " more info"
+		> *undefined*
+	*/
+	https://stackoverflow.com/questions/17546953/cant-access-object-property-even-though-it-exists-returns-undefined
+

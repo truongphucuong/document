@@ -1,0 +1,23 @@
+this in TypeScript
+https://github.com/Microsoft/TypeScript/wiki/'this'-in-TypeScript
+
+Local Fat Arrow
+	var position = new Position();
+	navigator.geolocation.getCurrentPosition((location) => position.getLocation(location));
+	// or
+	navigator.geolocation.getCurrentPosition(function(location) {
+		this.getLocation(location);
+	}.bind(position));
+	// or create 1 var set is this and call callback function
+	var self = this;
+	.....
+	
+Function.bind
+	// Example 1
+		var x = new SomeClass();
+		// SAFE: Functions created from function.bind always preserve 'this'
+		window.setTimeout(x.someMethod.bind(x), 100);
+		// or
+		window.setTimeout(function(){
+			this.a ++;
+		}.bind(this));

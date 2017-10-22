@@ -1,0 +1,42 @@
+Paginator
+
+Ex: ?page=1
+$page = 1;
+$maxResult = 10;
+$pageFirst = 1; // page first
+$totalRecord = 151;
+	=> $pageFinish = ceil($totalRecord/$maxResult)); // làm tròn lên
+$pagePrevious = false;
+$pageNext = false;
+//sql
+$limit = $maxResult = 10;
+$offset = ???;
+	//ex
+	$page = 1 => $offset = 0 //offset begin is 0
+	$page = 2 => @offset = 10
+	$page = 3 => @offset = 20
+	=> $offset = $limit * ($page - 1);
+// set pageFirst pageFinish
+	- will be 3 case:
+		+ pageFinish == 0; // Hide all
+		+ page == pageFirst == pageFinish
+			> Hide pageNext and pageNext
+		+ page == pageFirst
+			> pageNext = page + 1;
+			> Hide pagePrevious
+		+ page == pageFinish
+			> Hide pageNext
+			> pagePrevious = page - 1;
+		+ pageFirst < page < pageFinish
+			> pagePrevious = page - 1;
+			> pageNext = page + 1;
+			
+// html
+	- Ex: PageFirst Page PageNext, if != false then show, else hide
+		if (pagePrevious):
+			<a href="?page={pagePrevious}" >Previous</a>
+		endif;
+		<a href="?page={page}" >{page}</a>
+		if (pageNext):
+			<a href="?page={pageNext}" >Next</a>
+		endif;

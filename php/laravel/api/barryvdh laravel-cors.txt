@@ -1,0 +1,34 @@
+laravel-cors
+Source: https://github.com/barryvdh/laravel-cors/
+
+Install:
+	$ composer require barryvdh/laravel-cors
+	// add config.php
+	Barryvdh\Cors\ServiceProvider::class
+	// add middleware
+		protected $middleware = [
+		// ...
+		\Barryvdh\Cors\HandleCors::class,
+	];
+	
+Configuration:
+	- The default in config/cors.php
+		$ php artisan vendor:publish --provider="Barryvdh\Cors\ServiceProvider"
+	//
+	return [
+		 /*
+		 |--------------------------------------------------------------------------
+		 | Laravel CORS
+		 |--------------------------------------------------------------------------
+		 |
+		 | allowedOrigins, allowedHeaders and allowedMethods can be set to array('*')
+		 | to accept any value.
+		 |
+		 */
+		'supportsCredentials' => false,
+		'allowedOrigins' => ['*'],
+		'allowedHeaders' => ['Content-Type', 'X-Requested-With'],
+		'allowedMethods' => ['*'], // ex: ['GET', 'POST', 'PUT',  'DELETE']
+		'exposedHeaders' => [],
+		'maxAge' => 0,
+	]

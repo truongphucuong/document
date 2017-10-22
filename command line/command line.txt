@@ -1,0 +1,9 @@
+
+
+netstat
+	// show port is running
+		netstat -a -n -o
+	// show all application running on port 80, if have show, else ..
+		netstat -ano | findstr :80
+	
+	

@@ -1,0 +1,19 @@
+﻿problem
+- Khi gọi api từ api hoặc trang web khác nó sẽ bị lỗi: No 'Access-Control-Allow-Origin' header
+	 CORS (Cross-Origin Resource Sharing)
+	-> fix:
+	Có nhiều cách để fix
+		+ Sử dụng library: https://github.com/barryvdh/laravel-cors/
+		+ tự tạo một middleware để cho nó chấp nhận
+			* php artisan make:middleware Cors
+			* 
+				public function handle($request, Closure $next)
+				{
+					return $next($request)
+					->header('Access-Control-Allow-Origin', '*')
+					->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+				}
+			* sau đó đăng ký trong kernel.php và add vào route để sử dụng
+	-> Cách tự tạo như trên thì không hay cho lắm
+	-> Có một số vấn đề về bảo mật có thể tham khảo: https://blog.nikhilben.com/2015/09/02/laravel5-rest-api-and-cors/
+	https://appdividend.com/2017/09/22/laravel-5-5-angular-4-tutorial-example-scratch/
