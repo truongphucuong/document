@@ -1,1 +1,38 @@
 Routing
+
+Cake\Routing\Router
+
+Config/routes.php
+
+use Cake\Routing\Router;
+
+// Using the scoped route builder.
+Router::scope('/', function ($routes) {
+    $routes->connect('/', ['controller' => 'Articles', 'action' => 'index']);
+});
+
+// Using the static method.
+Router::connect('/', ['controller' => 'Articles', 'action' => 'index']);
+
+
+$routes->connect('/articles/*', ['controller' => 'Articles', 'action' => 'view']);
+
+
+$routes->connect(
+    '/articles/:id',
+    ['controller' => 'Articles', 'action' => 'view'],
+)
+->setPatterns(['id' => '\d+'])
+->setPass(['id']);
+
+// Prior to 3.5 use the options array
+$routes->connect(
+    '/articles/:id',
+    ['controller' => 'Articles', 'action' => 'view'],
+    ['id' => '\d+', 'pass' => ['id']]
+);
+
+
+echo Router::url(['controller' => 'Articles', 'action' => 'view', 'id' => 15]);
+// Will output
+/articles/15

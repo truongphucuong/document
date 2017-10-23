@@ -2,7 +2,7 @@ Install
 
 $ composer self-update
 $ composer create-project --prefer-dist cakephp/app cms
-
+$ composer update
 Require:
 	- php ^5.6.0
 	- mbstring PHP extension
