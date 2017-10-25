@@ -51,7 +51,7 @@ Git command
 	$ git mv [old-folder-name] [new-folder-name]
 
 // move folder
-	$ git [folder] [path-folder-new]
+	$ git mv [folder] [path-folder-new]
 
 	
 // git credential store

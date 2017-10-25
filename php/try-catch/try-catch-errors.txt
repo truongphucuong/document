@@ -1,0 +1,26 @@
+﻿//try catch not working
+	example:  Cakephp
+	Nó sẽ xảy ra lỗi nếu làm thế này
+		try {
+			$u = $userTable->get(2334);
+		} catch (Cake\Datasource\Exception\RecordNotFoundException $e) {
+			echo 'not found';
+		}
+	nguyên nhân là do cái namespace gọi tới Exception
+		Cake\Datasource\Exception\RecordNotFoundException
+	Khắc phục:
+	Cách 1: luôn luôn use nó trước khi dùng
+		use Cake\Datasource\Exception\RecordNotFoundException;
+		//
+		try {
+			$u = $userTable->get(2334);
+		} catch (RecordNotFoundException $e) {
+			echo 'not found';
+		}
+	Cách 2: thêm \ đằng trước nó khi gọi
+		try {
+			$u = $userTable->get(2334);
+		} catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+			echo 'not found';
+		}
+	finish :)

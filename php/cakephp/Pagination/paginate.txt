@@ -1,0 +1,14 @@
+
+
+// cache count ~ total row
+
+Cake\Datasource\Paginator.php
+line 185
+
+
+		/*
+        $cleanQuery = clone $query;
+        $count = $cleanQuery->count(); //sql count(*), ...count edit, cache....
+		*/
+		=> Add cache
+		
