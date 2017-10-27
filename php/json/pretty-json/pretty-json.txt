@@ -1,0 +1,10 @@
+pretty-json
+
+read more: 
+	- https://stackoverflow.com/questions/6054033/pretty-printing-json-with-php
+	- https://github.com/GerHobbelt/nicejson-php/blob/master/example-1.php
+
+PHP: 
+	- >= 5.4 using json_encode($arr, JSON_PRETTY_PRINT)
+	- or create function .... ex json_format:
+	
