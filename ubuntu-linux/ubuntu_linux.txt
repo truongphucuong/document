@@ -1,0 +1,19 @@
+
+// set ip
+	$ sudo nano /etc/network/interfaces
+	// edit
+	auto eth0
+	iface eth0 inet statis
+	address 192.168.1.111
+	netmask 255.255.255.0
+	gateway 192.168.1.1
+	
+// add dns name ~ nameserver
+$ sudo nano /etc/resolv.conf
+	nameserver 8.8.8.8
+
+// add proxy
+
+	$ sudo nano /etc/apt/apt.conf
+	// with content
+	accquire::http::proxy "http://host:port/";

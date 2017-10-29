@@ -1,0 +1,25 @@
+Composer
+Install
+	- Access getcomposer.com/download
+// create project lasted version
+	$ composer create-project laravel/laravel [project-name] ["5.0.*"] --prefer-dist
+// require package	
+	$composer require [package]
+	ex: $composer require barryvdh/debugbar
+	// require with version
+	$composer require "barryvdh/debugbar":"~2.4.2"
+	
+// Find package
+	- composer require
+	- Enter the package name:
+		$ Search for a package []: //Your package name here
+	- The version of the package (If you would like to have the latest version just leave it blank)
+		Enter the version constraint to require (or leave blank to use the latest version) []: 5.0
+// Project
+	// install package into 		composer.json
+		$ composer install
+	// update package into 	composer.json
+		$ composer update
+	// generate vendor/autoload file
+		$ composer dump-autoload
+	

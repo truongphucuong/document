@@ -1,0 +1,8 @@
+
+// shutdown
+	$ sudo shutdown -h now
+
+// restart
+	$ sudo reboot
+	// ore
+	$ sudo shutdown -r now

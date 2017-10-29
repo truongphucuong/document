@@ -1,0 +1,15 @@
+
+// start
+	$service [serviceName] start
+// restart
+	$ service [serviceName] restart
+// stop
+	$ service [serviceName] stop
+	
+if you have "upstart" then you can use these:
+	stop <servicename>
+	start <servicename>
+	restart <servicename>
+
+// list status of services 
+	$ service --status-all

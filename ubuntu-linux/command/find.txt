@@ -1,0 +1,16 @@
+Find
+	- Syntax:
+		$ find [-H] [-L] [-P] [path...] [expression]
+	- The 3 options [-H] [-L] [-P] are not commonly seen but should at least be noted if only to realise that the -P option will be the default unless another option is specified:
+		-H : Do not follow symbolic links, except while processing the command line arguments. 
+		-L : Follow symbolic links.
+		-P : Never follow symbolic links: the default option.
+	- Read more:
+		+ https://help.ubuntu.com/community/find
+		
+// find files with name is "test.php"
+	$ find / -name 'test.php'
+// find filew condition extension file is *.txt
+	$ find / -iname '*.txt'
+// find folder with name is test, begin root /
+	$ find / -name test -type d

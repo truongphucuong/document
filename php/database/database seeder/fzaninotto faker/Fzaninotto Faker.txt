@@ -1,0 +1,20 @@
+Faker
+
+Install:
+	$ composer require fzaninotto/faker
+	
+Using
+	// create faker
+	$faker = Faker\Factory::create();
+	// create datas
+	$data = [];
+	for ($i = 0; $i <= 100; $i++) {
+		$data[] = [
+			'username' => $faker->userName,
+			'first_name' => $faker->firstName,
+			'last_name' => $faker->lastName,
+			'email' => $faker->email,
+			'password' => $faker->password
+		]
+	}
+	
