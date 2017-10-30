@@ -1,0 +1,14 @@
+vi command
+
+
+// create new file
+$ sudo vi test.txt
+	- Choose "S" press to insert
+	- save new file
+		Ctrl C
+		:wq! 
+	- ! if file doesn't exist then create file new
+	
+// keyword
+	- Ctrl G: end of the file.
+	

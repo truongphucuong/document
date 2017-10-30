@@ -1,0 +1,16 @@
+systemctl
+
+// add boot system, auto running when system start
+	$ sudo systemctl enable httpd
+// remove boot system
+	$ sudo systemctl disable httpd
+// start service
+	$ sudo systemctl start httpd
+// restart
+
+// stop
+
+// show status service... check service
+	$ sudo systemctl status httpd
+	- if message errro too length, don't show all message => hide some message, want show word-wrap line then add "-l" into command
+	$ sudo systemctl status -l httpd
