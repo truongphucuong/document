@@ -1,0 +1,10 @@
+fuser
+install
+	$ sudo yum install psmisc
+test
+	$ fuser --version
+	
+show all pid on port
+	$ fuser 80/tcp
+kill all pid on port 80 tcp
+	$ user -k 80/tcp
