@@ -10,5 +10,10 @@ $ sudo vi test.txt
 	- ! if file doesn't exist then create file new
 	
 // keyword
-	- Ctrl G: end of the file.
+	Ctrl G: end of the file.
 	
+// search str
+	Ctrl C
+	/^string
+// to line 456
+	:456
