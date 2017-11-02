@@ -1,0 +1,17 @@
+yum
+
+// info
+	yum info yum-replace-plugin
+
+	//
+	sudo yum replace php55w-common --replace-with=php-common
+// install tum replace
+	- https://support.rackspace.com/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat/]
+	
+	rm
+	yum -y remove php*
+	
+	sudo yum install epel-release
+	
+remi
+http://rpms.famillecollet.com/enterprise/7/remi/x86_64/

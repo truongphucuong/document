@@ -1,0 +1,6 @@
+Import
+
+
+shell> mysql db_name < backup-file.sql
+mysql -u username -p database_name < file.sql
+CREATE DATABASE IF NOT EXISTS tutorial_database;
